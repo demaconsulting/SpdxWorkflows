@@ -5,7 +5,7 @@ namespace DemaConsulting.SpdxWorkflows.Tests;
 [TestClass]
 public class GetDotNetVersion : WorkflowTest
 {
-    [TestMethod]
+    [TestMethod, TestCategory("AnyOS")]
     public void TestGetDotNetVersion()
     {
         // Run the workflow

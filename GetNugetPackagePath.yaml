@@ -1,0 +1,36 @@
+# GetNugetPackagePath
+#
+# This SpdxTool workflow file gets the path to a nuget package in the nuget
+# global-packages cache.
+#
+# Parameters:
+#   package  # Nuget package name (lowercase)
+#   version  # Nuget package version
+#
+# Outputs:
+# - path     # Path to a nuget package
+
+parameters:
+  package: ''
+  version: ''
+
+
+steps:
+
+  # Query the nuget global packages path
+- command: query
+  inputs:
+    output: global-packages
+    pattern: '^global-packages: (?<value>.*)$'
+    program: 'nuget'
+    arguments:
+    - 'locals'
+    - 'global-packages'
+    - '-list'
+
+
+  # Assemble the full path
+- command: set-variable
+  inputs:
+    value: ${{ global-packages }}${{ package }}/${{ version }}
+    output: path
