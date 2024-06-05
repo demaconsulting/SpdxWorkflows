@@ -1,0 +1,38 @@
+# AddIarEwArmPackage
+#
+# This SpdxTool workflow file adds an IAR Embedded Workbench for Arm package
+# entry to an SPDX document. The IAR EWARM package information was attained
+# from:
+# - https://www.iar.com/about/contact
+# - https://www.iar.com/products/architectures/arm/iar-embedded-workbench-for-arm/
+#
+# Parameters:
+# - spdx        # SPDX document file name
+# - id          # IAR EWARM Package ID
+# - version     # IAR EWARM Package version
+#
+# Outputs:
+#   none
+
+parameters:
+  spdx: ''
+  version: ''
+  id: 'SPDXRef-Package-IAR-EWARM'
+
+
+steps:
+
+  # Add the IAR EWARM package
+- command: add-package
+  inputs:
+    spdx: ${{ spdx }}
+    package:
+      id: ${{ id }}
+      name: IAR Embedded Workbench for Arm
+      download: NOASSERTION
+      version: ${{ version }}
+      supplier: 'Organization: IAR Systems AB'
+      originator: 'Organization: IAR Systems AB'
+      homepage: https://www.iar.com/products/architectures/arm/iar-embedded-workbench-for-arm
+      summary: Complete development environment for Arm
+    relationships: [ ]
