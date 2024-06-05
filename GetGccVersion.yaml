@@ -1,0 +1,21 @@
+# GetGccVersion
+#
+# This SpdxTool workflow file gets the version of the gcc compiler in the path.
+#
+# Parameters:
+#   none
+#
+# Outputs:
+# - version     # Version of the gcc compiler
+
+
+steps:
+
+  # Query the version of gcc
+- command: query
+  inputs:
+    output: version
+    pattern: '^gcc .* (?<value>\d.*)$'
+    program: 'gcc'
+    arguments:
+    - '--version'

@@ -23,6 +23,24 @@ jobs:
       run: >
         dotnet tool restore
 
-    - name: Run Tests
+    - name: Build Tests
+      run: >
+        dotnet build test/DemaConsulting.SpdxWorkflows.Tests
+
+    - name: Run Windows Tests
+      if: ${{ matrix.os =='windows-latest' }}
       run: >
         dotnet test test/DemaConsulting.SpdxWorkflows.Tests
+        --no-build
+        --no-restore
+        --verbosity normal
+        --filter "TestCategory=AnyOS|TestCategory=Windows"
+
+    - name: Run Linux Tests
+      if: ${{ matrix.os =='ubuntu-latest' }}
+      run: >
+        dotnet test test/DemaConsulting.SpdxWorkflows.Tests
+        --no-build
+        --no-restore
+        --verbosity normal
+        --filter "TestCategory=AnyOS|TestCategory=Linux"

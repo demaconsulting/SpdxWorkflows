@@ -29,9 +29,17 @@ jobs:
       run: >
         dotnet tool restore
       
+    - name: Build Tests
+      run: >
+        dotnet build test/DemaConsulting.SpdxWorkflows.Tests
+
     - name: Run Tests
       run: >
         dotnet test test/DemaConsulting.SpdxWorkflows.Tests
+        --no-build
+        --no-restore
+        --verbosity normal
+        --filter "TestCategory=AnyOS"
 
     - name: Create release
       if: ${{ inputs.publish == 'release' || inputs.publish == 'publish' }}

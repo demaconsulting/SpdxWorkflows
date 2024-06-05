@@ -3,7 +3,7 @@
 [TestClass]
 public class AddNugetPackage : AddPackageTest
 {
-    [TestMethod]
+    [TestMethod, TestCategory("AnyOS")]
     public void TestAddNugetPackage()
     {
         var doc = RunAddPackageWorkflow(

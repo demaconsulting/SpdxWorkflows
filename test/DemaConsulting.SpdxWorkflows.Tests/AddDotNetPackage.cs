@@ -3,7 +3,7 @@
 [TestClass]
 public class AddDotNetPackage : AddPackageTest
 {
-    [TestMethod]
+    [TestMethod, TestCategory("AnyOS")]
     public void TestAddDotNetPackage()
     {
         var doc = RunAddPackageWorkflow(
