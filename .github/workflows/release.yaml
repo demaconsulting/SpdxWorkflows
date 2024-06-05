@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  release:
+    permissions:
+      contents: write
+      packages: write
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup dotnet 6/8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.x
+
+    - name: Restore Tools
+      run: >
+        dotnet tool restore
+      
+    - name: Run Tests
+      run: >
+        dotnet test test/DemaConsulting.SpdxWorkflows.Tests
+
+    - name: Create release
+      if: ${{ inputs.publish == 'release' || inputs.publish == 'publish' }}
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: '*.yaml'
+        generateReleaseNotes: true
+        tag: ${{ github.event.inputs.version }}
