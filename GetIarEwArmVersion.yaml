@@ -1,0 +1,23 @@
+# GetIarEwArmVersion
+#
+# This SpdxTool workflow file gets the version of the IAR Embedded Workbench
+# for ARM compiler at the specified location. On Windows the install locations
+# are usually of the form "C:\Program Files\IAR Systems\Embedded Workbench x.y"
+#
+# Parameters:
+#   path:       # IAR install path
+#
+# Outputs:
+# - version     # Version of the IAR compiler
+
+
+steps:
+
+  # Query the version of IAR EWARM
+- command: query
+  inputs:
+    output: version
+    pattern: 'Compiler V(?<value>.*)/.*$'
+    program: '${{ path }}\arm\bin\iccarm'
+    arguments:
+    - '--version'
