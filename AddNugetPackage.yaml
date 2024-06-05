@@ -1,0 +1,40 @@
+# AddNugetPackage
+#
+# This SpdxTool workflow file adds a Nuget package entry to an SPDX 
+# document. The Nuget package information was attained from:
+# - https://www.nuget.org/
+# - https://learn.microsoft.com/en-us/nuget/install-nuget-client-tools?tabs=windows#nugetexe-cli
+# - https://github.com/NuGet/NuGet.Client?tab=License-1-ov-file
+#
+# Parameters:
+# - spdx        # SPDX document file name
+# - id          # Nuget Package ID
+# - version     # Nuget Package version
+#
+# Outputs:
+#   none
+
+parameters:
+  spdx: ''
+  version: ''
+  id: 'SPDXRef-Package-Nuget'
+
+
+steps:
+
+  # Add the Nuget package
+- command: add-package
+  inputs:
+    spdx: ${{ spdx }}
+    package:
+      id: ${{ id }}
+      name: NuGet Command Line Interface
+      download: NOASSERTION
+      license: Apache-2.0
+      copyright: Copyright (c) .NET Foundation and Contributors.
+      version: ${{ version }}
+      supplier: 'Organization: Microsoft Corporation'
+      originator: 'Organization: Microsoft Corporation'
+      homepage: https://www.nuget.org
+      summary: The NuGet client tools provide the ability to produce and consume packages.
+    relationships: [ ]

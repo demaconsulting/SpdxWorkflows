@@ -1,20 +1,20 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace DemaConsulting.SpdxWorkflows.Tests;
 
 [TestClass]
-public class GetDotNetVersion : WorkflowTest
+public class GetNugetVersion : WorkflowTest
 {
     [TestMethod]
-    public void TestGetDotNetVersion()
+    public void TestGetNugetVersion()
     {
         // Run the workflow
         var exitCode = RunWorkflow(
             out var output,
-            "GetDotNetVersion.yaml",
+            "GetNugetVersion.yaml",
             "--verbose");
 
-        // Verify we found a valid DotNet version
+        // Verify we found a valid Nuget version
         Assert.AreEqual(0, exitCode);
         Assert.IsTrue(Regex.IsMatch(output, @"version = \d+\.\d+\.\d+"));
     }

@@ -1,0 +1,39 @@
+# AddDotNetPackage
+#
+# This SpdxTool workflow file adds a DotNet package entry to an SPDX 
+# document. The DotNet package information was attained from:
+# - https://learn.microsoft.com/en-us/dotnet/core/tools/
+# - https://github.com/dotnet/dotnet?tab=MIT-1-ov-file
+#
+# Parameters:
+# - spdx        # SPDX document file name
+# - id          # DotNet Package ID
+# - version     # DotNet Package version
+#
+# Outputs:
+#   none
+
+parameters:
+  spdx: ''
+  version: ''
+  id: 'SPDXRef-Package-DotNet'
+
+
+steps:
+
+  # Add the DotNet package
+- command: add-package
+  inputs:
+    spdx: ${{ spdx }}
+    package:
+      id: ${{ id }}
+      name: .NET command-line interface.
+      download: NOASSERTION
+      license: MIT
+      copyright: Copyright (c) 2019 Microsoft
+      version: ${{ version }}
+      supplier: 'Organization: Microsoft Corporation'
+      originator: 'Organization: Microsoft Corporation'
+      homepage: https://dotnet.microsoft.com/en-us/
+      summary: .NET is a free, open-source cross-platform framework for building applications and cloud services.
+    relationships: [ ]

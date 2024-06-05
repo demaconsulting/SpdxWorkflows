@@ -1,0 +1,21 @@
+# GetNugetVersion
+#
+# This SpdxTool workflow file gets the version of the nuget tool in the path.
+#
+# Parameters:
+#   none
+#
+# Outputs:
+# - version     # Version of the nuget tool
+
+
+steps:
+
+  # Query the version of nuget
+- command: query
+  inputs:
+    output: version
+    pattern: '^NuGet Version: (?<value>.*)$'
+    program: 'nuget'
+    arguments:
+    - help
