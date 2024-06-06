@@ -7,6 +7,12 @@
       "commands": [
         "spdx-tool"
       ]
+    },
+    "demaconsulting.vswheretool": {
+      "version": "3.1.7",
+      "commands": [
+        "vswhere"
+      ]
     }
   }
 }

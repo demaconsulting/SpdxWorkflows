@@ -1,0 +1,40 @@
+# AddMsBuildPackage
+#
+# This SpdxTool workflow file adds an MSBuild package entry to an SPDX 
+# document. The MSBuild package information was attained from:
+# - https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild?view=vs-2022
+# - https://github.com/dotnet/msbuild?tab=MIT-1-ov-file
+#
+# Parameters:
+# - spdx        # SPDX document file name
+# - id          # MSBuild Package ID
+# - version     # MSBuild Package version
+#
+# Outputs:
+#   none
+
+parameters:
+  spdx: ''
+  version: ''
+  id: 'SPDXRef-Package-MSBuild'
+
+
+steps:
+
+  # Add the MSBuild package
+- command: add-package
+  inputs:
+    spdx: ${{ spdx }}
+    package:
+      id: ${{ id }}
+      name: Microsoft Build Engine
+      download: NOASSERTION
+      license: MIT
+      copyright: Copyright (c) .NET Foundation and Contributors
+      version: ${{ version }}
+      supplier: 'Organization: Microsoft Corporation'
+      originator: 'Organization: Microsoft Corporation'
+      homepage: https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild
+      summary: The Microsoft Build Engine is a platform for building applications.
+      purl: pkg:github/dotnet/msbuild@v${{ version }}
+    relationships: [ ]

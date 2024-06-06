@@ -1,0 +1,28 @@
+# GetMsBuildVersion
+#
+# This SpdxTool workflow file gets the version of the MSBuild engine at the
+# specified location. On Windows the install locations are usually of the form:
+# - C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\MSBuild.exe
+# - C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin
+# - C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe
+#
+# Parameters:
+#   msbuild:    # MSBuild path and file name
+#
+# Outputs:
+# - version     # MSBuild version
+
+parameters:
+  msbuild: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe'
+
+
+steps:
+
+  # Query the version of MSBuild
+- command: query
+  inputs:
+    output: version
+    pattern: '^MSBuild version (?<value>\d+\.\d+\.\d+)'
+    program: '${{ msbuild }}'
+    arguments:
+    - '--version'
