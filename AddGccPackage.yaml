@@ -1,0 +1,40 @@
+# AddGccPackage
+#
+# This SpdxTool workflow file adds a GCC package entry to an SPDX 
+# document. The GCC package information was attained from:
+# - https://gcc.gnu.org/
+# - https://github.com/gcc-mirror/gcc?tab=License-3-ov-file
+#
+# Parameters:
+# - spdx        # SPDX document file name
+# - id          # GCC Package ID
+# - version     # GCC Package version
+#
+# Outputs:
+#   none
+
+parameters:
+  spdx: ''
+  version: ''
+  id: 'SPDXRef-Package-GCC'
+
+
+steps:
+
+  # Add the GCC package
+- command: add-package
+  inputs:
+    spdx: ${{ spdx }}
+    package:
+      id: ${{ id }}
+      name: GNU Compiler Collection
+      download: NOASSERTION
+      license: GPL-3.0-or-later
+      copyright: 'Copyright (C) 2009 Free Software Foundation, Inc. <http://fsf.org/>'
+      version: ${{ version }}
+      supplier: NOASSERTION
+      originator: 'Organization: GNU'
+      homepage: https://gcc.gnu.org/
+      summary: The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Java, and Ada, as well as libraries for these languages (libstdc++, libgcj,...).
+      purl: pkg:github/gcc-mirror/gcc@releases/gcc-${{ version }}
+    relationships: [ ]
