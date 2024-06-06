@@ -1,0 +1,27 @@
+# GetVsTestVersion
+#
+# This SpdxTool workflow file gets the version of the VSTest console at the
+# specified location. On Windows the install locations are usually of the form:
+# - C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\IDE\Extensions\TestPlatform
+# - C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\TestPlatform\vstest.console.exe
+#
+# Parameters:
+#   vstest:     # vstest.console.exe path and file name
+#
+# Outputs:
+# - version     # vstest version
+
+parameters:
+  vstest: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\TestPlatform\vstest.console.exe'
+
+
+steps:
+
+  # Query the version of vstest.console.exe
+- command: query
+  inputs:
+    output: version
+    pattern: 'Version\s+(?<value>17\.[0-9\.]+)'
+    program: '${{ vstest }}'
+    arguments:
+    - '--version'
