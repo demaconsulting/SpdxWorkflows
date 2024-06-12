@@ -10,6 +10,9 @@
 # Outputs:
 # - version     # Version of the IAR compiler
 
+parameters:
+  path: 'C:\Program Files\IAR Systems\Embedded Workbench 9.2'
+
 
 steps:
 
