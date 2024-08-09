@@ -27,13 +27,13 @@ steps:
     spdx: ${{ spdx }}
     package:
       id: ${{ id }}
-      name: .NET command-line interface.
+      name: .NET SDK
       download: NOASSERTION
       license: MIT
-      copyright: Copyright (c) 2019 Microsoft
+      copyright: Copyright (c) .NET Foundation and Contributors
       version: ${{ version }}
       supplier: 'Organization: Microsoft Corporation'
-      originator: 'Organization: Microsoft Corporation'
-      homepage: https://dotnet.microsoft.com/en-us/
-      summary: .NET is a free, open-source cross-platform framework for building applications and cloud services.
+      originator: 'Organization: .NET Foundation'
+      homepage: https://dotnet.microsoft.com/
+      summary: Core functionality needed to create .NET Core projects, that is shared between Visual Studio and CLI.
     relationships: [ ]
