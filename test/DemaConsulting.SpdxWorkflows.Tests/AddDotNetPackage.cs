@@ -17,15 +17,15 @@ public class AddDotNetPackage : AddPackageTest
         Assert.IsNotNull(package);
 
         // Verify the information
-        Assert.AreEqual(".NET command-line interface.", package.Name);
+        Assert.AreEqual(".NET SDK", package.Name);
         Assert.AreEqual("MIT", package.ConcludedLicense);
-        Assert.AreEqual("Copyright (c) 2019 Microsoft", package.CopyrightText);
+        Assert.AreEqual("Copyright (c) .NET Foundation and Contributors", package.CopyrightText);
         Assert.AreEqual("8.0.301", package.Version);
         Assert.AreEqual("Organization: Microsoft Corporation", package.Supplier);
-        Assert.AreEqual("Organization: Microsoft Corporation", package.Originator);
-        Assert.AreEqual("https://dotnet.microsoft.com/en-us/", package.HomePage);
+        Assert.AreEqual("Organization: .NET Foundation", package.Originator);
+        Assert.AreEqual("https://dotnet.microsoft.com/", package.HomePage);
         Assert.AreEqual(
-            ".NET is a free, open-source cross-platform framework for building applications and cloud services.",
+            "Core functionality needed to create .NET Core projects, that is shared between Visual Studio and CLI.",
             package.Summary);
     }
 }
