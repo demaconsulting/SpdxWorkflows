@@ -34,11 +34,13 @@ internal static class Runner
         var process = Process.Start(startInfo) ??
                       throw new InvalidOperationException("Failed to start process");
 
+        // Capture the output
+        output = process.StandardOutput.ReadToEnd() + process.StandardError.ReadToEnd();
+
         // Wait for the process to exit
         process.WaitForExit();
 
-        // Save the output and return the exit code
-        output = process.StandardOutput.ReadToEnd();
+        // Return the exit code
         return process.ExitCode;
     }
 }

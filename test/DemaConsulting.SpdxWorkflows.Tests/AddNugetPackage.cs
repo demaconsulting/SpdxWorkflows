@@ -25,5 +25,11 @@ public class AddNugetPackage : AddPackageTest
         Assert.AreEqual("Organization: Microsoft Corporation", package.Originator);
         Assert.AreEqual("https://www.nuget.org", package.HomePage);
         Assert.AreEqual("The NuGet client tools provide the ability to produce and consume packages.", package.Summary);
+
+        // Verify the PURL
+        Assert.AreEqual(1, package.ExternalReferences.Length);
+        Assert.AreEqual(SpdxModel.SpdxReferenceCategory.PackageManager, package.ExternalReferences[0].Category);
+        Assert.AreEqual("purl", package.ExternalReferences[0].Type);
+        Assert.AreEqual("pkg:github/NuGet/NuGet.Client@6.9.1.3", package.ExternalReferences[0].Locator);
     }
 }

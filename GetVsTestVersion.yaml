@@ -21,7 +21,7 @@ steps:
 - command: query
   inputs:
     output: version
-    pattern: 'Version\s+(?<value>17\.[0-9\.]+)'
+    pattern: '[Vv]ersion\s+(?<value>[0-9\.]+)'
     program: '${{ vstest }}'
     arguments:
-    - '--version'
+    - '-?'

@@ -37,4 +37,5 @@ steps:
       originator: 'Organization: Microsoft Corporation'
       homepage: https://www.nuget.org
       summary: The NuGet client tools provide the ability to produce and consume packages.
+      purl: pkg:github/NuGet/NuGet.Client@${{ version }}
     relationships: [ ]
