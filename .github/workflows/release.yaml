@@ -69,6 +69,6 @@ jobs:
         run: >
           dotnet
           nuget push
-          artifacts/src/DemaConsulting.SpdxWorkflows/bin/Release/*.nupkg
+          artifacts/DemaConsulting.SpdxWorkflows.*.nupkg
           --source "https://api.nuget.org/v3/index.json"
           --api-key "${{ secrets.DEMACONSULTINGNUGETKEY }}"
