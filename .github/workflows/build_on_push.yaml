@@ -1,0 +1,28 @@
+---
+name: Build
+
+on: [push, workflow_dispatch]
+
+env:
+  version: '0.0.0-run.${{ github.run_number }}'
+
+jobs:
+  build-windows:
+    name: Build Windows
+    permissions:
+      contents: read       # To read repository contents
+      pull-requests: write # To write pull requests analysis results and artifacts
+    uses: ./.github/workflows/build.yaml
+    with:
+      os: windows-latest
+      version: 0.0.0-run.${{ github.run_number }}
+
+  build-linux:
+    name: Build Linux
+    permissions:
+      contents: read       # To read repository contents
+      pull-requests: write # To write pull requests analysis results and artifacts
+    uses: ./.github/workflows/build.yaml
+    with:
+      os: ubuntu-latest
+      version: 0.0.0-run.${{ github.run_number }}
