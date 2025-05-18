@@ -23,16 +23,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup NuGet
-        uses: nuget/setup-nuget@v2
-      
-      - name: Test NuGet
-        run: |
-          nuget help
-          nuget.exe help
-          which nuget
-          which nuget.exe
-
       - name: Setup dotnet 8
         uses: actions/setup-dotnet@v4
         with:
