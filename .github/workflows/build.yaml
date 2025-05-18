@@ -1,0 +1,68 @@
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+
+jobs:
+  build:
+    permissions:
+      contents: read       # To read repository contents
+      pull-requests: write # To write pull requests analysis results and artifacts
+
+    runs-on: ${{ inputs.os }}
+
+    steps:
+    
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup dotnet 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.x
+
+      - name: Restore Tools
+        run: >
+          dotnet tool restore
+
+      - name: Build Tests
+        run: >
+          dotnet build test/DemaConsulting.SpdxWorkflows.Tests
+
+      - name: Run Windows Tests
+        if: startsWith(inputs.os, 'windows')
+        run: >
+          dotnet test test/DemaConsulting.SpdxWorkflows.Tests
+          --no-build
+          --no-restore
+          --verbosity normal
+          --filter "TestCategory=AnyOS|TestCategory=Windows"
+
+      - name: Run Linux Tests
+        if: startsWith(inputs.os, 'ubuntu')
+        run: >
+          dotnet test test/DemaConsulting.SpdxWorkflows.Tests
+          --no-build
+          --no-restore
+          --verbosity normal
+          --filter "TestCategory=AnyOS|TestCategory=Linux"
+
+      - name: Create Dotnet Tool
+        run: |
+          cd pack
+          dotnet pack DemaConsulting.SpdxWorkflows.csproj -p:Version=${{ inputs.version }} -o .
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts-${{ inputs.os }}
+          path: |
+            pack/*.nupkg

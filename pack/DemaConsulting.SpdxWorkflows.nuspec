@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>DemaConsulting.SpdxWorkflows</id>
+        <version>0.0.0</version>
+        <title>SPDX Workflows</title>
+        <authors>Dema Consulting</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <license type="expression">MIT</license>
+        <readme>README.md</readme>
+        <icon>Icon.png</icon>
+        <projectUrl>https://github.com/demaconsulting/SpdxWorkflows</projectUrl>
+        <description>SPDX Workflows</description>
+        <copyright>Dema Consulting</copyright>
+        <tags>spdx sbom contentv2 contentFiles</tags>
+        <repository type="git" url="https://github.com/demaconsulting/SpdxWorkflows.git" />
+        <contentFiles>
+            <files include="**/workflows/*.yaml" buildAction="EmbeddedResource" />
+        </contentFiles>
+    </metadata>
+    <files>
+        <file src="..\README.md" target="README.md" />
+        <file src="..\Icon.png" target="Icon.png" />
+        <file src="..\*.yaml" target="contentFiles\any\any\workflows" />
+    </files>
+</package>
