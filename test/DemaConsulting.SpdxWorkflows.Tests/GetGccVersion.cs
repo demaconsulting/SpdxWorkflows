@@ -3,7 +3,7 @@
 namespace DemaConsulting.SpdxWorkflows.Tests;
 
 [TestClass]
-public class GetGccVersion : WorkflowTest
+public partial class GetGccVersion : WorkflowTest
 {
     [TestMethod, TestCategory("Linux")]
     public void TestGetGccVersion()
@@ -16,6 +16,9 @@ public class GetGccVersion : WorkflowTest
 
         // Verify we found a valid GCC version
         Assert.AreEqual(0, exitCode);
-        Assert.IsTrue(Regex.IsMatch(output, @"version = \d+\.\d+"));
+        Assert.MatchesRegex(VersionRegex(), output);
     }
+
+    [GeneratedRegex(@"version = \d+\.\d+")]
+    private static partial Regex VersionRegex();
 }

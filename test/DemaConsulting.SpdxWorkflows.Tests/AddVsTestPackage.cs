@@ -27,7 +27,7 @@ public class AddVsTestPackage : AddPackageTest
         Assert.AreEqual("VSTest.Console.exe is the command-line tool to run tests.", package.Summary);
 
         // Verify the PURL
-        Assert.AreEqual(1, package.ExternalReferences.Length);
+        Assert.HasCount(1, package.ExternalReferences);
         Assert.AreEqual(SpdxModel.SpdxReferenceCategory.PackageManager, package.ExternalReferences[0].Category);
         Assert.AreEqual("purl", package.ExternalReferences[0].Type);
         Assert.AreEqual("pkg:github/microsoft/vstest@v17.10.0", package.ExternalReferences[0].Locator);

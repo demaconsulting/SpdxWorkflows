@@ -27,7 +27,7 @@ public class AddMsBuildPackage : AddPackageTest
         Assert.AreEqual("The Microsoft Build Engine is a platform for building applications.", package.Summary);
 
         // Verify the PURL
-        Assert.AreEqual(1, package.ExternalReferences.Length);
+        Assert.HasCount(1, package.ExternalReferences);
         Assert.AreEqual(SpdxModel.SpdxReferenceCategory.PackageManager, package.ExternalReferences[0].Category);
         Assert.AreEqual("purl", package.ExternalReferences[0].Type);
         Assert.AreEqual("pkg:github/dotnet/msbuild@v17.10.4", package.ExternalReferences[0].Locator);

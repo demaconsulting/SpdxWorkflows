@@ -33,7 +33,7 @@ public abstract class AddPackageTest : WorkflowTest
     /// <param name="yamlName">Name of the workflow file</param>
     /// <param name="args">Workflow arguments</param>
     /// <returns>Parsed SPDX document for inspection</returns>
-    protected SpdxDocument RunAddPackageWorkflow(string yamlName, params string[] args)
+    protected static SpdxDocument RunAddPackageWorkflow(string yamlName, params string[] args)
     {
         try
         {

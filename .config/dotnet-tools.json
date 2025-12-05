@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "demaconsulting.spdxtool": {
-      "version": "2.3.0",
+      "version": "2.5.0",
       "commands": [
         "spdx-tool"
       ]

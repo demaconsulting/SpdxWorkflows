@@ -3,7 +3,7 @@
 namespace DemaConsulting.SpdxWorkflows.Tests;
 
 [TestClass]
-public class GetNugetVersion : WorkflowTest
+public partial class GetNugetVersion : WorkflowTest
 {
     [TestMethod, TestCategory("Windows")]
     public void TestGetNugetVersion()
@@ -16,6 +16,9 @@ public class GetNugetVersion : WorkflowTest
 
         // Verify we found a valid Nuget version
         Assert.AreEqual(0, exitCode);
-        Assert.IsTrue(Regex.IsMatch(output, @"version = \d+\.\d+\.\d+"));
+        Assert.MatchesRegex(VersionRegex(), output);
     }
+
+    [GeneratedRegex(@"version = \d+\.\d+\.\d+")]
+    private static partial Regex VersionRegex();
 }
