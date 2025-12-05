@@ -6,13 +6,13 @@
 public abstract class WorkflowTest
 {
     /// <summary>
-    /// Run a 
+    /// Run a workflow
     /// </summary>
     /// <param name="output"></param>
     /// <param name="yamlName"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    protected int RunWorkflow(out string output, string yamlName, params string[] args)
+    protected static int RunWorkflow(out string output, string yamlName, params string[] args)
     {
         // Construct the arguments
         var allArgs = new List<string>
@@ -24,6 +24,6 @@ public abstract class WorkflowTest
         allArgs.AddRange(args);
 
         // Run the workflow
-        return Runner.Run(out output, "dotnet", allArgs.ToArray());
+        return Runner.Run(out output, "dotnet", [..allArgs]);
     }
 }

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 namespace DemaConsulting.SpdxWorkflows.Tests;
 
 [TestClass]
-public class GetDotNetVersion : WorkflowTest
+public partial class GetDotNetVersion : WorkflowTest
 {
     [TestMethod, TestCategory("AnyOS")]
     public void TestGetDotNetVersion()
@@ -16,6 +16,9 @@ public class GetDotNetVersion : WorkflowTest
 
         // Verify we found a valid DotNet version
         Assert.AreEqual(0, exitCode);
-        Assert.IsTrue(Regex.IsMatch(output, @"version = \d+\.\d+\.\d+"));
+        Assert.MatchesRegex(VersionRegex(), output);
     }
+
+    [GeneratedRegex(@"version = \d+\.\d+\.\d+")]
+    private static partial Regex VersionRegex();
 }

@@ -3,7 +3,7 @@
 namespace DemaConsulting.SpdxWorkflows.Tests;
 
 [TestClass]
-public class GetNugetPackagePath : WorkflowTest
+public partial class GetNugetPackagePath : WorkflowTest
 {
     [TestMethod, TestCategory("Windows")]
     public void TestGetNugetPackagePath()
@@ -18,6 +18,9 @@ public class GetNugetPackagePath : WorkflowTest
 
         // Verify we found the package path
         Assert.AreEqual(0, exitCode);
-        Assert.IsTrue(Regex.IsMatch(output, @"path = .+demaconsulting.spdxmodel/0.1.0"));
+        Assert.MatchesRegex(PackageRegex(), output);
     }
+
+    [GeneratedRegex("path = .+demaconsulting.spdxmodel/0.1.0")]
+    private static partial Regex PackageRegex();
 }
