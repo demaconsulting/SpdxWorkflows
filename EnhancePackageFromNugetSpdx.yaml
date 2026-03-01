@@ -44,7 +44,7 @@ steps:
     inputs:
       spdx: ${{ spdx }}
       id: ${{ original-spdx-package-id }}
-      output: package-version
+      output: original-spdx-package-version
 
   # Query the nuget global-packages path
   - command: query
@@ -60,7 +60,8 @@ steps:
   # Constructs the path to the nuget SPDX document
   - command: set-variable
     inputs:
-      value: ${{ nuget-global-packages }}/${{ nuget-package }}/${{ package-version }}/${{ nuget-spdx-path }}
+      value: >-
+        ${{ nuget-global-packages }}/${{ nuget-package }}/${{ original-spdx-package-version }}/${{ nuget-spdx-path }}
       output: nuget-spdx
 
   # Find the ID of the package in the nuget SPDX document
