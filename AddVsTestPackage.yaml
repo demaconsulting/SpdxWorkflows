@@ -1,6 +1,6 @@
 # AddVsTestPackage
 #
-# This SpdxTool workflow file adds a VSTest package entry to an SPDX 
+# This SpdxTool workflow file adds a VSTest package entry to an SPDX
 # document. The VSTest package information was attained from:
 # - https://learn.microsoft.com/en-us/visualstudio/test/vstest-console-options
 # - https://github.com/microsoft/vstest?tab=MIT-1-ov-file
@@ -22,19 +22,19 @@ parameters:
 steps:
 
   # Add the VSTest package
-- command: add-package
-  inputs:
-    spdx: ${{ spdx }}
-    package:
-      id: ${{ id }}
-      name: Visual Studio Test Platform
-      download: NOASSERTION
-      license: MIT
-      copyright: Copyright (c) Microsoft Corporation
-      version: ${{ version }}
-      supplier: 'Organization: Microsoft Corporation'
-      originator: 'Organization: Microsoft Corporation'
-      homepage: https://learn.microsoft.com/en-us/visualstudio/test/vstest-console-options
-      summary: VSTest.Console.exe is the command-line tool to run tests.
-      purl: pkg:github/microsoft/vstest@v${{ version }}
-    relationships: [ ]
+  - command: add-package
+    inputs:
+      spdx: ${{ spdx }}
+      package:
+        id: ${{ id }}
+        name: Visual Studio Test Platform
+        download: NOASSERTION
+        license: MIT
+        copyright: Copyright (c) Microsoft Corporation
+        version: ${{ version }}
+        supplier: 'Organization: Microsoft Corporation'
+        originator: 'Organization: Microsoft Corporation'
+        homepage: https://learn.microsoft.com/en-us/visualstudio/test/vstest-console-options
+        summary: VSTest.Console.exe is the command-line tool to run tests.
+        purl: pkg:github/microsoft/vstest@v${{ version }}
+      relationships: []

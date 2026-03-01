@@ -33,54 +33,54 @@ parameters:
 steps:
 
   # Find the ID of the existing package in the SPDX document
-- command: find-package
-  inputs:
-    spdx: ${{ spdx }}
-    output: original-spdx-package-id
-    name: ${{ name }}
+  - command: find-package
+    inputs:
+      spdx: ${{ spdx }}
+      output: original-spdx-package-id
+      name: ${{ name }}
 
   # Read the version of the existing package in the SPDX document
-- command: get-version
-  inputs:
-    spdx: ${{ spdx }}
-    id: ${{ original-spdx-package-id }}
-    output: original-spdx-package-version
+  - command: get-version
+    inputs:
+      spdx: ${{ spdx }}
+      id: ${{ original-spdx-package-id }}
+      output: package-version
 
   # Query the nuget global-packages path
-- command: query
-  inputs:
-    output: nuget-global-packages
-    pattern: '^global-packages: (?<value>.*)$'
-    program: 'nuget'
-    arguments:
-    - 'locals'
-    - 'global-packages'
-    - '-list'
+  - command: query
+    inputs:
+      output: nuget-global-packages
+      pattern: '^global-packages: (?<value>.*)$'
+      program: 'nuget'
+      arguments:
+        - 'locals'
+        - 'global-packages'
+        - '-list'
 
   # Constructs the path to the nuget SPDX document
-- command: set-variable
-  inputs:
-    value: ${{ nuget-global-packages }}/${{ nuget-package }}/${{ original-spdx-package-version }}/${{ nuget-spdx-path }}
-    output: nuget-spdx
+  - command: set-variable
+    inputs:
+      value: ${{ nuget-global-packages }}/${{ nuget-package }}/${{ package-version }}/${{ nuget-spdx-path }}
+      output: nuget-spdx
 
   # Find the ID of the package in the nuget SPDX document
-- command: find-package
-  inputs:
-    spdx: ${{ nuget-spdx }}
-    output: nuget-spdx-package-id
-    name: ${{ name }}
+  - command: find-package
+    inputs:
+      spdx: ${{ nuget-spdx }}
+      output: nuget-spdx-package-id
+      name: ${{ name }}
 
   # Copy the package information from the nuget SPDX document
-- command: copy-package
-  inputs:
-    from: ${{ nuget-spdx }}
-    to: ${{ spdx }}
-    package: ${{ nuget-spdx-package-id }}
-    recursive: ${{ recursive }}
+  - command: copy-package
+    inputs:
+      from: ${{ nuget-spdx }}
+      to: ${{ spdx }}
+      package: ${{ nuget-spdx-package-id }}
+      recursive: ${{ recursive }}
 
   # Find the updated package ID
-- command: find-package
-  inputs:
-    spdx: ${{ spdx }}
-    output: id
-    name: ${{ name }}
+  - command: find-package
+    inputs:
+      spdx: ${{ spdx }}
+      output: id
+      name: ${{ name }}

@@ -12,10 +12,10 @@
 steps:
 
   # Query the version of dotnet
-- command: query
-  inputs:
-    output: version
-    pattern: '(?<value>\d+\.\d+\.\d+)'
-    program: dotnet
-    arguments:
-    - '--version'
+  - command: query
+    inputs:
+      output: version
+      pattern: '(?<value>\d+\.\d+\.\d+)'
+      program: dotnet
+      arguments:
+        - '--version'

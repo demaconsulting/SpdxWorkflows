@@ -19,10 +19,10 @@ parameters:
 steps:
 
   # Query the version of MSBuild
-- command: query
-  inputs:
-    output: version
-    pattern: '^MSBuild version (?<value>\d+\.\d+\.\d+)'
-    program: '${{ msbuild }}'
-    arguments:
-    - '--version'
+  - command: query
+    inputs:
+      output: version
+      pattern: '^MSBuild version (?<value>\d+\.\d+\.\d+)'
+      program: '${{ msbuild }}'
+      arguments:
+        - '--version'

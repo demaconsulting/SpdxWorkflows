@@ -17,10 +17,10 @@ parameters:
 steps:
 
   # Query the version of IAR EWARM
-- command: query
-  inputs:
-    output: version
-    pattern: 'Compiler V(?<value>.*)/.*$'
-    program: '${{ path }}\arm\bin\iccarm'
-    arguments:
-    - '--version'
+  - command: query
+    inputs:
+      output: version
+      pattern: 'Compiler V(?<value>.*)/.*$'
+      program: '${{ path }}\arm\bin\iccarm'
+      arguments:
+        - '--version'
