@@ -35,6 +35,8 @@ steps:
         supplier: NOASSERTION
         originator: 'Organization: GNU'
         homepage: https://gcc.gnu.org/
-        summary: The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Java, and Ada.
+        summary: >-
+          The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Java, and Ada,
+          as well as libraries for these languages (libstdc++, libgcj,...).
         purl: pkg:github/gcc-mirror/gcc@releases/gcc-${{ version }}
       relationships: []
