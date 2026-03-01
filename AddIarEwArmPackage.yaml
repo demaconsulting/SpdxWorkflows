@@ -23,16 +23,16 @@ parameters:
 steps:
 
   # Add the IAR EWARM package
-- command: add-package
-  inputs:
-    spdx: ${{ spdx }}
-    package:
-      id: ${{ id }}
-      name: IAR Embedded Workbench for Arm
-      download: NOASSERTION
-      version: ${{ version }}
-      supplier: 'Organization: IAR Systems AB'
-      originator: 'Organization: IAR Systems AB'
-      homepage: https://www.iar.com/products/architectures/arm/iar-embedded-workbench-for-arm
-      summary: Complete development environment for Arm
-    relationships: [ ]
+  - command: add-package
+    inputs:
+      spdx: ${{ spdx }}
+      package:
+        id: ${{ id }}
+        name: IAR Embedded Workbench for Arm
+        download: NOASSERTION
+        version: ${{ version }}
+        supplier: 'Organization: IAR Systems AB'
+        originator: 'Organization: IAR Systems AB'
+        homepage: https://www.iar.com/products/architectures/arm/iar-embedded-workbench-for-arm
+        summary: Complete development environment for Arm
+      relationships: []

@@ -12,8 +12,8 @@
 steps:
 
   # Query the version of nuget
-- command: query
-  inputs:
-    output: version
-    pattern: '^NuGet Version: (?<value>.*)$'
-    program: 'nuget'
+  - command: query
+    inputs:
+      output: version
+      pattern: '^NuGet Version: (?<value>.*)$'
+      program: 'nuget'

@@ -1,23 +1,53 @@
 on:
   workflow_call:
     inputs:
-      os:
-        required: true
-        type: string
       version:
         required: true
         type: string
 
 jobs:
+  quality_checks:
+    name: Quality Checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Run markdown linter
+        uses: DavidAnson/markdownlint-cli2-action@v22
+        with:
+          globs: '**/*.md'
+
+      - name: Run spell checker
+        uses: streetsidesoftware/cspell-action@v8
+        with:
+          files: '**/*.{cs,md,json,yaml,yml}'
+          incremental_files_only: false
+
+      - name: Run YAML linter
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .yamllint.yaml
+
   build:
+    name: Build ${{ matrix.os }}
+    needs: quality_checks
     permissions:
       contents: read       # To read repository contents
       pull-requests: write # To write pull requests analysis results and artifacts
 
-    runs-on: ${{ inputs.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
-    
+
       - name: Checkout
         uses: actions/checkout@v6
         with:
@@ -39,7 +69,7 @@ jobs:
           dotnet build test/DemaConsulting.SpdxWorkflows.Tests
 
       - name: Run Windows Tests
-        if: startsWith(inputs.os, 'windows')
+        if: startsWith(matrix.os, 'windows')
         run: >
           dotnet test test/DemaConsulting.SpdxWorkflows.Tests
           --no-build
@@ -48,7 +78,7 @@ jobs:
           --filter "TestCategory=AnyOS|TestCategory=Windows"
 
       - name: Run Linux Tests
-        if: startsWith(inputs.os, 'ubuntu')
+        if: startsWith(matrix.os, 'ubuntu')
         run: >
           dotnet test test/DemaConsulting.SpdxWorkflows.Tests
           --no-build
@@ -64,6 +94,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v5
         with:
-          name: artifacts-${{ inputs.os }}
+          name: artifacts-${{ matrix.os }}
           path: |
             pack/*.nupkg

@@ -1,0 +1,16 @@
+@echo off
+REM Run all linters for SpdxWorkflows (Windows)
+
+echo Checking markdown...
+call npx markdownlint-cli2 "**/*.md"
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+echo Checking spelling...
+call npx cspell "**/*.{cs,md,json,yaml,yml}" --no-progress
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+echo Checking YAML...
+call yamllint -c .yamllint.yaml .
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+echo All linting passed!

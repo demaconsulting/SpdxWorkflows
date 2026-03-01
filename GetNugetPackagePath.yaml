@@ -18,19 +18,19 @@ parameters:
 steps:
 
   # Query the nuget global packages path
-- command: query
-  inputs:
-    output: global-packages
-    pattern: '^global-packages: (?<value>.*)$'
-    program: 'nuget'
-    arguments:
-    - 'locals'
-    - 'global-packages'
-    - '-list'
+  - command: query
+    inputs:
+      output: global-packages
+      pattern: '^global-packages: (?<value>.*)$'
+      program: 'nuget'
+      arguments:
+        - 'locals'
+        - 'global-packages'
+        - '-list'
 
 
   # Assemble the full path
-- command: set-variable
-  inputs:
-    value: ${{ global-packages }}${{ package }}/${{ version }}
-    output: path
+  - command: set-variable
+    inputs:
+      value: ${{ global-packages }}${{ package }}/${{ version }}
+      output: path

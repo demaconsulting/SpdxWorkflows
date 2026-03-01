@@ -1,6 +1,6 @@
 # AddDotNetPackage
 #
-# This SpdxTool workflow file adds a DotNet package entry to an SPDX 
+# This SpdxTool workflow file adds a DotNet package entry to an SPDX
 # document. The DotNet package information was attained from:
 # - https://learn.microsoft.com/en-us/dotnet/core/tools/
 # - https://github.com/dotnet/dotnet?tab=MIT-1-ov-file
@@ -22,18 +22,18 @@ parameters:
 steps:
 
   # Add the DotNet package
-- command: add-package
-  inputs:
-    spdx: ${{ spdx }}
-    package:
-      id: ${{ id }}
-      name: .NET SDK
-      download: NOASSERTION
-      license: MIT
-      copyright: Copyright (c) .NET Foundation and Contributors
-      version: ${{ version }}
-      supplier: 'Organization: Microsoft Corporation'
-      originator: 'Organization: .NET Foundation'
-      homepage: https://dotnet.microsoft.com/
-      summary: Core functionality needed to create .NET Core projects, that is shared between Visual Studio and CLI.
-    relationships: [ ]
+  - command: add-package
+    inputs:
+      spdx: ${{ spdx }}
+      package:
+        id: ${{ id }}
+        name: .NET SDK
+        download: NOASSERTION
+        license: MIT
+        copyright: Copyright (c) .NET Foundation and Contributors
+        version: ${{ version }}
+        supplier: 'Organization: Microsoft Corporation'
+        originator: 'Organization: .NET Foundation'
+        homepage: https://dotnet.microsoft.com/
+        summary: Core functionality needed to create .NET Core projects, that is shared between Visual Studio and CLI.
+      relationships: []

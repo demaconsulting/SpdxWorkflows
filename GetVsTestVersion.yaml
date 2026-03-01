@@ -12,16 +12,17 @@
 # - version     # vstest version
 
 parameters:
-  vstest: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\TestPlatform\vstest.console.exe'
+  vstest: >-
+    C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\TestPlatform\vstest.console.exe
 
 
 steps:
 
   # Query the version of vstest.console.exe
-- command: query
-  inputs:
-    output: version
-    pattern: '[Vv]ersion\s+(?<value>[0-9\.]+)'
-    program: '${{ vstest }}'
-    arguments:
-    - '-?'
+  - command: query
+    inputs:
+      output: version
+      pattern: '(?i)version\s+(?<value>[0-9\.]+)'
+      program: '${{ vstest }}'
+      arguments:
+        - '-?'
