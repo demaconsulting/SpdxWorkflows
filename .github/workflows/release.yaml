@@ -20,13 +20,12 @@ on:
 
 jobs:
   build:
-    name: Build Linux
+    name: Build
     permissions:
       contents: read       # To read repository contents
       pull-requests: write # To write pull requests analysis results and artifacts
     uses: ./.github/workflows/build.yaml
     with:
-      os: ubuntu-latest
       version: ${{ inputs.version }}
 
   release:
