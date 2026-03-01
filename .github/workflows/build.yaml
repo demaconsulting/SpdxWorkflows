@@ -25,7 +25,7 @@ jobs:
       - name: Run spell checker
         uses: streetsidesoftware/cspell-action@v8
         with:
-          files: '**/*.{md,yaml,yml}'
+          files: '**/*.{cs,md,json,yaml,yml}'
           incremental_files_only: false
 
       - name: Run YAML linter
