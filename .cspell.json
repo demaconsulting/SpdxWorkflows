@@ -37,6 +37,7 @@
     "markdownlint",
     "mermaid",
     "msbuild",
+    "MSBUILDDISABLENODEREUSE",
     "mstest",
     "myterm",
     "ncipollo",
