@@ -184,6 +184,10 @@ jobs:
           echo "=== Tool Versions Report ==="
           cat docs/buildnotes/versions.md
 
+      # === GENERATE HTML DOCUMENTS WITH PANDOC ===
+      # This section converts markdown documents to HTML using Pandoc.
+      # Downstream projects: Add any additional Pandoc HTML generation steps here.
+
       - name: Generate Build Notes HTML with Pandoc
         shell: bash
         run: >
@@ -204,6 +208,10 @@ jobs:
           --metadata date="$(date +'%Y-%m-%d')"
           --output docs/guide/guide.html
 
+      # === GENERATE PDF DOCUMENTS WITH WEASYPRINT ===
+      # This section converts HTML documents to PDF using Weasyprint.
+      # Downstream projects: Add any additional Weasyprint PDF generation steps here.
+
       - name: Generate Build Notes PDF with Weasyprint
         run: >
           dotnet weasyprint
@@ -217,6 +225,10 @@ jobs:
           --pdf-variant pdf/a-3u
           docs/guide/guide.html
           "docs/SpdxWorkflows User Guide.pdf"
+
+      # === UPLOAD ARTIFACTS ===
+      # This section uploads all generated documentation artifacts.
+      # Downstream projects: Add any additional artifact uploads here.
 
       - name: Upload documentation
         uses: actions/upload-artifact@v7
