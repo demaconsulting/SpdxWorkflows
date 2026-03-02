@@ -17,6 +17,11 @@ tools:
     command: node --version
     regex: '(?i)v(?<version>\d+\.\d+\.\d+)'
 
+  # npm
+  npm:
+    command: npm --version
+    regex: '(?<version>\d+\.\d+\.\d+)'
+
   # SpdxTool (DemaConsulting.SpdxTool from dotnet tool list)
   spdx-tool:
     command: dotnet tool list

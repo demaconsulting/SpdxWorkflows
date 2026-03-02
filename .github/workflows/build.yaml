@@ -114,45 +114,64 @@ jobs:
           name: version-capture-${{ matrix.os }}
           path: versionmark-build-*.json
 
-  # Builds the documentation for the project using pandoc and weasyprint.
+  # Builds the supporting documentation including user guides and build notes.
   build-docs:
-    name: Build Docs
+    name: Build Documents
+    runs-on: windows-latest
     needs: build
-    runs-on: ubuntu-latest
     permissions:
       contents: read
 
     steps:
+      # === CHECKOUT AND DOWNLOAD ARTIFACTS ===
+      # This section retrieves the code and all necessary artifacts from previous jobs.
+      # Downstream projects: Add any additional artifact downloads here.
 
       - name: Checkout
         uses: actions/checkout@v6
+
+      - name: Download all version captures
+        uses: actions/download-artifact@v8
         with:
-          fetch-depth: 0
+          path: version-captures
+          pattern: 'version-capture-*'
+        continue-on-error: true
+
+      # === INSTALL DEPENDENCIES ===
+      # This section installs all required dependencies and tools for document generation.
+      # Downstream projects: Add any additional dependency installations here.
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 'lts/*'
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.x
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Install npm dependencies
+        run: npm install
 
       - name: Restore Tools
-        run: >
-          dotnet tool restore
+        run: dotnet tool restore
 
-      - name: Install Node Packages
-        run: >
-          npm install
+      # === CAPTURE TOOL VERSIONS ===
+      # This section captures the versions of all tools used in the build process.
+      # Downstream projects: Add any additional tools to capture here.
 
-      - name: Download version captures
-        uses: actions/download-artifact@v8
-        with:
-          pattern: version-capture-*
-          path: version-captures
-          merge-multiple: true
+      - name: Capture tool versions for build-docs
+        shell: bash
+        run: |
+          echo "Capturing tool versions..."
+          dotnet versionmark --capture --job-id "build-docs" -- \
+            dotnet git node npm pandoc weasyprint buildmark versionmark
+          echo "✓ Tool versions captured"
+
+      # === GENERATE MARKDOWN REPORTS ===
+      # This section generates all markdown reports from various tools and sources.
+      # Downstream projects: Add any additional markdown report generation steps here.
 
       - name: Generate Build Notes with BuildMark
         shell: bash
@@ -193,7 +212,7 @@ jobs:
         run: >
           dotnet pandoc
           --defaults docs/buildnotes/definition.yaml
-          --filter node_modules/.bin/mermaid-filter
+          --filter node_modules/.bin/mermaid-filter.cmd
           --metadata version="${{ inputs.version }}"
           --metadata date="$(date +'%Y-%m-%d')"
           --output docs/buildnotes/buildnotes.html
@@ -203,7 +222,7 @@ jobs:
         run: >
           dotnet pandoc
           --defaults docs/guide/definition.yaml
-          --filter node_modules/.bin/mermaid-filter
+          --filter node_modules/.bin/mermaid-filter.cmd
           --metadata version="${{ inputs.version }}"
           --metadata date="$(date +'%Y-%m-%d')"
           --output docs/guide/guide.html
