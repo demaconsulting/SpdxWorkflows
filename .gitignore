@@ -10,9 +10,9 @@ node_modules/
 package-lock.json
 
 # Generated documentation
-docs/**/*.html
 docs/**/*.pdf
-!docs/template/**
+docs/buildnotes/buildnotes.html
+docs/guide/guide.html
 docs/buildnotes.md
 docs/buildnotes/versions.md
 
