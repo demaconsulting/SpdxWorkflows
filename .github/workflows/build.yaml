@@ -214,7 +214,7 @@ jobs:
           --tests "test-results/**/*.trx"
           --report docs/requirements/requirements.md
           --justifications docs/justifications/justifications.md
-          --trace-matrix docs/tracematrix/tracematrix.md
+          --matrix docs/tracematrix/tracematrix.md
 
       - name: Publish Tool Versions
         shell: bash
