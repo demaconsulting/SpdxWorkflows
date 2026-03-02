@@ -1,0 +1,48 @@
+# VersionMark Configuration File
+# This file defines which tools to capture and how to extract their version information.
+
+tools:
+  # .NET SDK
+  dotnet:
+    command: dotnet --version
+    regex: '(?<version>\d+\.\d+\.\d+(?:\.\d+)?)'
+
+  # Git
+  git:
+    command: git --version
+    regex: '(?i)git version (?<version>\d+\.\d+\.\d+)'
+
+  # Node.js
+  node:
+    command: node --version
+    regex: '(?i)v(?<version>\d+\.\d+\.\d+)'
+
+  # SpdxTool (DemaConsulting.SpdxTool from dotnet tool list)
+  spdx-tool:
+    command: dotnet tool list
+    regex: '(?i)demaconsulting\.spdxtool\s+(?<version>\d+\.\d+\.\d+)'
+
+  # VsWhereTool (DemaConsulting.VsWhereTool from dotnet tool list)
+  vswhere:
+    command: dotnet tool list
+    regex: '(?i)demaconsulting\.vswheretool\s+(?<version>\d+\.\d+\.\d+)'
+
+  # Pandoc (DemaConsulting.PandocTool from dotnet tool list)
+  pandoc:
+    command: dotnet tool list
+    regex: '(?i)demaconsulting\.pandoctool\s+(?<version>\d+\.\d+\.\d+)'
+
+  # WeasyPrint (DemaConsulting.WeasyPrintTool from dotnet tool list)
+  weasyprint:
+    command: dotnet tool list
+    regex: '(?i)demaconsulting\.weasyprinttool\s+(?<version>\d+\.\d+\.\d+)'
+
+  # BuildMark (DemaConsulting.BuildMark from dotnet tool list)
+  buildmark:
+    command: dotnet tool list
+    regex: '(?i)demaconsulting\.buildmark\s+(?<version>\d+\.\d+\.\d+)'
+
+  # VersionMark (DemaConsulting.VersionMark from dotnet tool list)
+  versionmark:
+    command: dotnet tool list
+    regex: '(?i)demaconsulting\.versionmark\s+(?<version>\d+\.\d+\.\d+)'
