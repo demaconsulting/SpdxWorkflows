@@ -19,19 +19,21 @@ Project-specific guidance for agents working on SpdxWorkflows - a collection of 
 ## Key Files
 
 - **`*.yaml`** (root) - SPDX workflow YAML files executed by SpdxTool
+- **`requirements.yaml`** - All requirements with test linkage (enforced via `dotnet reqstream --enforce`)
 - **`test/DemaConsulting.SpdxWorkflows.Tests/`** - C# MSTest V4 tests for the workflows
 - **`.editorconfig`** - Code style (4-space indent, UTF-8+BOM, LF endings)
 - **`.cspell.json`, `.markdownlint-cli2.jsonc`, `.yamllint.yaml`** - Linting configs
 
 ## Requirements
 
-- Requirements will be tracked in `requirements.yaml` (to be added)
-- All requirements MUST be linked to tests once introduced
+- All requirements MUST be linked to tests
 - Not all tests need to be linked to requirements (tests may exist for corner cases, etc.)
+- Enforced in CI: `dotnet reqstream --requirements requirements.yaml --tests "test-results/**/*.trx" --enforce`
+- When adding features: add requirement + link to test
 
 ## Testing
 
-- **Test Naming**: `ClassName_MethodUnderTest_Scenario_ExpectedBehavior` for unit tests
+- **Test Naming**: `WorkflowName_Scenario_ExpectedBehavior` for workflow tests
 - **Test Framework**: Uses MSTest V4 for testing
 - **Test Location**: `test/DemaConsulting.SpdxWorkflows.Tests/`
 - Tests run the YAML workflow files via `dotnet spdx-tool run-workflow`
@@ -60,10 +62,14 @@ lint.bat      # Windows
 
 ## Documentation
 
+- **User Guide**: `docs/guide/guide.md`
 - **README.md**: Usage guide for the workflows
 - **CONTRIBUTING.md**: Contribution guidelines
 - **SECURITY.md**: Security policy and vulnerability reporting
 - **CODE_OF_CONDUCT.md**: Community standards and conduct expectations
+- **Requirements**: `requirements.yaml` -> auto-generated docs
+- **Build Notes**: Auto-generated via BuildMark
+- **CHANGELOG.md**: Not present - changes are captured in the auto-generated build notes
 
 ## Markdown Link Style
 

@@ -28,7 +28,7 @@ Invoke the requirements-agent for:
 
 ### Test Coverage Strategy
 
-- **All requirements MUST be linked to tests** - this is enforced in CI once `requirements.yaml` is present
+- **All requirements MUST be linked to tests** - this is enforced in CI
 - **Not all tests need to be linked to requirements** - tests may exist for:
   - Exploring corner cases
   - Testing design decisions
@@ -38,7 +38,7 @@ Invoke the requirements-agent for:
 
 ### Requirements Format
 
-Follow the `requirements.yaml` structure (to be added):
+Follow the `requirements.yaml` structure:
 
 - Clear ID and description
 - Justification explaining why the requirement is needed

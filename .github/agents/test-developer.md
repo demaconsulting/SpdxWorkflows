@@ -23,7 +23,7 @@ All tests must follow the AAA pattern with clear sections:
 
 ```csharp
 [TestMethod, TestCategory("AnyOS")]
-public void GetDotNetVersion_Run_OnAnyOS_ReturnsVersion()
+public void GetDotNetVersion_OnAnyOS_ReturnsVersion()
 {
     // Arrange - set up the expected output pattern
     var expected = VersionRegex();
@@ -42,7 +42,8 @@ public void GetDotNetVersion_Run_OnAnyOS_ReturnsVersion()
 
 ### Test Documentation
 
-- Test name clearly states what is being tested and the scenario
+- Test name clearly states which workflow is being tested and the scenario
+- Use the naming convention `WorkflowName_Scenario_ExpectedBehavior`
 - Comments document:
   - What is being tested (the workflow behavior)
   - What the assertions prove (the expected outcome)
@@ -58,7 +59,7 @@ public void GetDotNetVersion_Run_OnAnyOS_ReturnsVersion()
 
 ### Tests and Requirements
 
-- **All requirements MUST have linked tests** once `requirements.yaml` is introduced
+- **All requirements MUST have linked tests** - this is enforced in CI
 - **Not all tests need requirements** - tests may be created for:
   - Verifying edge cases not explicitly stated in requirements
   - Testing error handling scenarios
