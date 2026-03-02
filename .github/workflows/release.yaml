@@ -51,6 +51,18 @@ jobs:
           name: artifacts-ubuntu-latest
           path: artifacts
 
+      - name: Download Documents
+        uses: actions/download-artifact@v8
+        with:
+          name: documents
+          path: artifacts
+
+      - name: Move Build Notes
+        shell: bash
+        run: |
+          set -e
+          mv artifacts/buildnotes.md buildnotes.md
+
       - name: Clean Artifacts
         shell: bash
         run: rm -rf artifacts/test
@@ -60,7 +72,8 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: 'artifacts/**/*'
-          generateReleaseNotes: true
+          bodyFile: buildnotes.md
+          generateReleaseNotes: false
           tag: ${{ inputs.version }}
 
       - name: Publish to Nuget

@@ -46,6 +46,7 @@
     "opencover",
     "pagetitle",
     "pandoc",
+    "pandoctool",
     "Pylint",
     "Qube",
     "reqstream",
@@ -78,6 +79,7 @@
     "vstest",
     "vswhere",
     "Weasyprint",
+    "weasyprinttool",
     "yamllint"
   ],
   "ignorePaths": [
