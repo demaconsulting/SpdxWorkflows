@@ -1,0 +1,13 @@
+---
+title: SpdxWorkflows Requirements
+subtitle: Requirements Specification for SpdxWorkflows
+author: DEMA Consulting
+description: Requirements Specification for the SpdxWorkflows project
+lang: en-US
+keywords:
+  - SpdxWorkflows
+  - Requirements
+  - Specification
+  - SPDX
+  - Workflows
+---
