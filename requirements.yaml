@@ -9,6 +9,11 @@
 #                    --tests "test-results/**/*.trx"
 #                    --enforce
 #
+# Requirement ID naming convention:
+#   SPWF-GET-NNN  - Get Version workflow requirements
+#   SPWF-ADD-NNN  - Add Package workflow requirements
+#   SPWF-ENH-NNN  - Enhance Package workflow requirements
+#
 # Test links can include a source filter prefix (e.g. "windows@", "ubuntu@") to
 # restrict which test results count as evidence for a requirement. This is critical
 # for platform-specific requirements - removing these filters invalidates the proof.
@@ -17,7 +22,7 @@
 #   windows@TestName  - proves the test passed on a Windows platform
 #   ubuntu@TestName   - proves the test passed on a Linux (Ubuntu) platform
 #
-# NOTE: The GetIarEwArmVersion requirement (REQ-GIV-001) and the
+# NOTE: The GetIarEwArmVersion requirement (SPWF-GET-003) and the
 # EnhancePackageFromNugetSpdx workflow are commented out until test coverage is
 # available in CI.
 
@@ -26,7 +31,7 @@ sections:
   - title: Get Version Workflows
     requirements:
 
-      - id: REQ-GDN-001
+      - id: SPWF-GET-001
         title: >-
           The GetDotNetVersion workflow shall output the installed .NET SDK
           version as a version string.
@@ -39,7 +44,7 @@ sections:
           - windows@GetDotNetVersion_OnAnyOS_ReturnsVersion
           - ubuntu@GetDotNetVersion_OnAnyOS_ReturnsVersion
 
-      - id: REQ-GGV-001
+      - id: SPWF-GET-002
         title: >-
           The GetGccVersion workflow shall output the installed GCC compiler
           version as a version string.
@@ -50,11 +55,11 @@ sections:
         tests:
           - ubuntu@GetGccVersion_OnLinux_ReturnsVersion
 
-      # REQ-GIV-001 is commented out until test coverage is available.
+      # SPWF-GET-003 is commented out until test coverage is available.
       # The GetIarEwArmVersion workflow requires IAR EW ARM to be installed in CI.
       # Pending test: windows@GetIarEwArmVersion_OnWindows_ReturnsVersion
       #
-      # - id: REQ-GIV-001
+      # - id: SPWF-GET-003
       #   title: >-
       #     The GetIarEwArmVersion workflow shall output the installed IAR Embedded
       #     Workbench for ARM version as a version string.
@@ -65,7 +70,7 @@ sections:
       #   tests:
       #     - windows@GetIarEwArmVersion_OnWindows_ReturnsVersion
 
-      - id: REQ-GMV-001
+      - id: SPWF-GET-004
         title: >-
           The GetMsBuildVersion workflow shall output the installed MSBuild
           version as a version string.
@@ -76,7 +81,7 @@ sections:
         tests:
           - windows@GetMsBuildVersion_OnWindows_ReturnsVersion
 
-      - id: REQ-GNV-001
+      - id: SPWF-GET-005
         title: >-
           The GetNugetVersion workflow shall output the installed NuGet CLI
           version as a version string.
@@ -87,7 +92,7 @@ sections:
         tests:
           - windows@GetNugetVersion_OnWindows_ReturnsVersion
 
-      - id: REQ-GNP-001
+      - id: SPWF-GET-006
         title: >-
           The GetNugetPackagePath workflow shall output the file system path to
           the specified NuGet package in the local package cache.
@@ -98,7 +103,7 @@ sections:
         tests:
           - windows@GetNugetPackagePath_WithPackageAndVersion_ReturnsPath
 
-      - id: REQ-GVV-001
+      - id: SPWF-GET-007
         title: >-
           The GetVsTestVersion workflow shall output the installed Visual Studio
           Test Platform (VSTest) version as a version string.
@@ -112,7 +117,7 @@ sections:
   - title: Add Package Workflows
     requirements:
 
-      - id: REQ-ADP-001
+      - id: SPWF-ADD-001
         title: >-
           The AddDotNetPackage workflow shall add a .NET SDK package entry to the
           specified SPDX document with accurate metadata including name, version,
@@ -126,7 +131,7 @@ sections:
           - windows@AddDotNetPackage_WithValidParameters_AddsPackageToDocument
           - ubuntu@AddDotNetPackage_WithValidParameters_AddsPackageToDocument
 
-      - id: REQ-AGP-001
+      - id: SPWF-ADD-002
         title: >-
           The AddGccPackage workflow shall add a GNU Compiler Collection package
           entry to the specified SPDX document with accurate metadata including
@@ -140,7 +145,7 @@ sections:
           - windows@AddGccPackage_WithValidParameters_AddsPackageToDocument
           - ubuntu@AddGccPackage_WithValidParameters_AddsPackageToDocument
 
-      - id: REQ-AIP-001
+      - id: SPWF-ADD-003
         title: >-
           The AddIarEwArmPackage workflow shall add an IAR Embedded Workbench for
           ARM package entry to the specified SPDX document with accurate metadata
@@ -154,7 +159,7 @@ sections:
           - windows@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
           - ubuntu@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
 
-      - id: REQ-AMP-001
+      - id: SPWF-ADD-004
         title: >-
           The AddMsBuildPackage workflow shall add a Microsoft Build Engine package
           entry to the specified SPDX document with accurate metadata including
@@ -169,7 +174,7 @@ sections:
           - windows@AddMsBuildPackage_WithValidParameters_AddsPackageToDocument
           - ubuntu@AddMsBuildPackage_WithValidParameters_AddsPackageToDocument
 
-      - id: REQ-ANP-001
+      - id: SPWF-ADD-005
         title: >-
           The AddNugetPackage workflow shall add a NuGet CLI package entry to the
           specified SPDX document with accurate metadata including name, version,
@@ -183,7 +188,7 @@ sections:
           - windows@AddNugetPackage_WithValidParameters_AddsPackageToDocument
           - ubuntu@AddNugetPackage_WithValidParameters_AddsPackageToDocument
 
-      - id: REQ-AVP-001
+      - id: SPWF-ADD-006
         title: >-
           The AddVsTestPackage workflow shall add a Visual Studio Test Platform
           package entry to the specified SPDX document with accurate metadata
@@ -205,7 +210,7 @@ sections:
 #  - title: Enhance Package Workflows
 #    requirements:
 #
-#      - id: REQ-EPF-001
+#      - id: SPWF-ENH-001
 #        title: >-
 #          The EnhancePackageFromNugetSpdx workflow shall update an existing
 #          package entry in an SPDX document with enriched metadata copied from
