@@ -9,10 +9,16 @@
 #                    --tests "test-results/**/*.trx"
 #                    --enforce
 #
-# NOTE: Two workflows currently lack test coverage and are excluded from
-# enforcement until tests are provided:
-#   - GetIarEwArmVersion (REQ-GIV-001): requires IAR EW ARM installation
-#   - EnhancePackageFromNugetSpdx (REQ-EPF-001): requires NuGet package with SPDX
+# Test links can include a source filter prefix (e.g. "windows@", "ubuntu@") to
+# restrict which test results count as evidence for a requirement. This is critical
+# for platform-specific requirements - removing these filters invalidates the proof.
+#
+# Source filter prefixes:
+#   windows@TestName  - proves the test passed on a Windows platform
+#   ubuntu@TestName   - proves the test passed on a Linux (Ubuntu) platform
+#
+# NOTE: GetIarEwArmVersion (REQ-GIV-001) currently lacks test coverage as it
+# requires IAR EW ARM to be installed in CI.
 
 sections:
 
@@ -29,7 +35,8 @@ sections:
           chain transparency requirements. The version output must be a parseable
           version string matching the installed SDK.
         tests:
-          - GetDotNetVersion_OnAnyOS_ReturnsVersion
+          - windows@GetDotNetVersion_OnAnyOS_ReturnsVersion
+          - ubuntu@GetDotNetVersion_OnAnyOS_ReturnsVersion
 
       - id: REQ-GGV-001
         title: >-
@@ -40,7 +47,7 @@ sections:
           GCC version information into SPDX documents to satisfy NTIA minimum
           elements and software supply chain transparency requirements.
         tests:
-          - GetGccVersion_OnLinux_ReturnsVersion
+          - ubuntu@GetGccVersion_OnLinux_ReturnsVersion
 
       - id: REQ-GIV-001
         title: >-
@@ -62,7 +69,7 @@ sections:
           capture MSBuild version information into SPDX documents to satisfy NTIA
           minimum elements and software supply chain transparency requirements.
         tests:
-          - GetMsBuildVersion_OnWindows_ReturnsVersion
+          - windows@GetMsBuildVersion_OnWindows_ReturnsVersion
 
       - id: REQ-GNV-001
         title: >-
@@ -73,7 +80,7 @@ sections:
           NuGet version information into SPDX documents to satisfy NTIA minimum
           elements and software supply chain transparency requirements.
         tests:
-          - GetNugetVersion_OnWindows_ReturnsVersion
+          - windows@GetNugetVersion_OnWindows_ReturnsVersion
 
       - id: REQ-GNP-001
         title: >-
@@ -84,7 +91,7 @@ sections:
           NuGet packages on disk by name and version in order to read SPDX
           documents embedded within those packages.
         tests:
-          - GetNugetPackagePath_WithPackageAndVersion_ReturnsPath
+          - windows@GetNugetPackagePath_WithPackageAndVersion_ReturnsPath
 
       - id: REQ-GVV-001
         title: >-
@@ -95,7 +102,7 @@ sections:
           information into SPDX documents to satisfy NTIA minimum elements and
           software supply chain transparency requirements.
         tests:
-          - GetVsTestVersion_OnWindows_ReturnsVersion
+          - windows@GetVsTestVersion_OnWindows_ReturnsVersion
 
   - title: Add Package Workflows
     requirements:
@@ -111,7 +118,8 @@ sections:
           The .NET SDK metadata is fixed and well-known, sourced from Microsoft's
           published information and the dotnet/dotnet GitHub repository.
         tests:
-          - AddDotNetPackage_WithValidParameters_AddsPackageToDocument
+          - windows@AddDotNetPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddDotNetPackage_WithValidParameters_AddsPackageToDocument
 
       - id: REQ-AGP-001
         title: >-
@@ -124,7 +132,8 @@ sections:
           GCC metadata is publicly available from the GNU project and the
           gcc-mirror/gcc GitHub repository.
         tests:
-          - AddGccPackage_WithValidParameters_AddsPackageToDocument
+          - windows@AddGccPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddGccPackage_WithValidParameters_AddsPackageToDocument
 
       - id: REQ-AIP-001
         title: >-
@@ -137,7 +146,8 @@ sections:
           IAR EW ARM metadata is sourced from IAR Systems' published product
           information.
         tests:
-          - AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
+          - windows@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
 
       - id: REQ-AMP-001
         title: >-
@@ -151,7 +161,8 @@ sections:
           MSBuild metadata is publicly available from Microsoft's documentation and
           the dotnet/msbuild GitHub repository.
         tests:
-          - AddMsBuildPackage_WithValidParameters_AddsPackageToDocument
+          - windows@AddMsBuildPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddMsBuildPackage_WithValidParameters_AddsPackageToDocument
 
       - id: REQ-ANP-001
         title: >-
@@ -164,7 +175,8 @@ sections:
           NuGet CLI metadata is publicly available from nuget.org and the
           NuGet/NuGet.Client GitHub repository.
         tests:
-          - AddNugetPackage_WithValidParameters_AddsPackageToDocument
+          - windows@AddNugetPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddNugetPackage_WithValidParameters_AddsPackageToDocument
 
       - id: REQ-AVP-001
         title: >-
@@ -178,22 +190,25 @@ sections:
           VSTest metadata is publicly available from Microsoft's documentation and
           the microsoft/vstest GitHub repository.
         tests:
-          - AddVsTestPackage_WithValidParameters_AddsPackageToDocument
+          - windows@AddVsTestPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddVsTestPackage_WithValidParameters_AddsPackageToDocument
 
-  - title: Enhance Package Workflows
-    requirements:
-
-      - id: REQ-EPF-001
-        title: >-
-          The EnhancePackageFromNugetSpdx workflow shall update an existing
-          package entry in an SPDX document with enriched metadata copied from
-          the SPDX document embedded in the corresponding NuGet package.
-        justification: |
-          NuGet packages often include embedded SPDX documents with comprehensive
-          metadata such as license texts, checksums, and CPE identifiers that
-          exceed what is manually catalogued. Enhancing packages from this embedded
-          source improves SPDX document accuracy and completeness without
-          requiring manual data entry.
-        # No test yet - integration test requires a NuGet package with SPDX
-        # embedded in the local cache. This is a complex integration scenario.
-        # Pending test: EnhancePackageFromNugetSpdx_WithValidPackage_EnhancesDocument
+# The Enhance Package Workflows section is commented out until test coverage is
+# available. The EnhancePackageFromNugetSpdx workflow requires a NuGet package
+# with an embedded SPDX document in the local cache which is not available in CI.
+#
+#  - title: Enhance Package Workflows
+#    requirements:
+#
+#      - id: REQ-EPF-001
+#        title: >-
+#          The EnhancePackageFromNugetSpdx workflow shall update an existing
+#          package entry in an SPDX document with enriched metadata copied from
+#          the SPDX document embedded in the corresponding NuGet package.
+#        justification: |
+#          NuGet packages often include embedded SPDX documents with comprehensive
+#          metadata such as license texts, checksums, and CPE identifiers that
+#          exceed what is manually catalogued. Enhancing packages from this embedded
+#          source improves SPDX document accuracy and completeness without
+#          requiring manual data entry.
+#        # Pending test: EnhancePackageFromNugetSpdx_WithValidPackage_EnhancesDocument
