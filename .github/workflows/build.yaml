@@ -97,3 +97,162 @@ jobs:
           name: artifacts-${{ matrix.os }}
           path: |
             pack/*.nupkg
+
+      - name: Capture tool versions
+        shell: bash
+        run: |
+          echo "Capturing tool versions..."
+          OS_SHORT=$(echo "${{ matrix.os }}" | sed 's/windows-latest/win/;s/ubuntu-latest/ubuntu/')
+          JOB_ID="build-${OS_SHORT}"
+          dotnet versionmark --capture --job-id "${JOB_ID}" -- \
+            dotnet git versionmark
+          echo "✓ Tool versions captured"
+
+      - name: Upload version capture
+        uses: actions/upload-artifact@v7
+        with:
+          name: version-capture-${{ matrix.os }}
+          path: versionmark-build-*.json
+
+  # Builds the supporting documentation including user guides and build notes.
+  build-docs:
+    name: Build Documents
+    runs-on: windows-latest
+    needs: build
+    permissions:
+      contents: read
+
+    steps:
+      # === CHECKOUT AND DOWNLOAD ARTIFACTS ===
+      # This section retrieves the code and all necessary artifacts from previous jobs.
+      # Downstream projects: Add any additional artifact downloads here.
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Download all version captures
+        uses: actions/download-artifact@v8
+        with:
+          path: version-captures
+          pattern: 'version-capture-*'
+        continue-on-error: true
+
+      # === INSTALL DEPENDENCIES ===
+      # This section installs all required dependencies and tools for document generation.
+      # Downstream projects: Add any additional dependency installations here.
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 'lts/*'
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.x
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Restore Tools
+        run: dotnet tool restore
+
+      # === CAPTURE TOOL VERSIONS ===
+      # This section captures the versions of all tools used in the build process.
+      # Downstream projects: Add any additional tools to capture here.
+
+      - name: Capture tool versions for build-docs
+        shell: bash
+        run: |
+          echo "Capturing tool versions..."
+          dotnet versionmark --capture --job-id "build-docs" -- \
+            dotnet git node npm pandoc weasyprint buildmark versionmark
+          echo "✓ Tool versions captured"
+
+      # === GENERATE MARKDOWN REPORTS ===
+      # This section generates all markdown reports from various tools and sources.
+      # Downstream projects: Add any additional markdown report generation steps here.
+
+      - name: Generate Build Notes with BuildMark
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          dotnet buildmark
+          --build-version ${{ inputs.version }}
+          --report docs/buildnotes.md
+          --report-depth 1
+
+      - name: Display Build Notes Report
+        shell: bash
+        run: |
+          echo "=== Build Notes Report ==="
+          cat docs/buildnotes.md
+
+      - name: Publish Tool Versions
+        shell: bash
+        run: |
+          echo "Publishing tool versions..."
+          dotnet versionmark --publish --report docs/buildnotes/versions.md --report-depth 1 \
+            -- "versionmark-*.json" "version-captures/**/versionmark-*.json"
+          echo "✓ Tool versions published"
+
+      - name: Display Tool Versions Report
+        shell: bash
+        run: |
+          echo "=== Tool Versions Report ==="
+          cat docs/buildnotes/versions.md
+
+      # === GENERATE HTML DOCUMENTS WITH PANDOC ===
+      # This section converts markdown documents to HTML using Pandoc.
+      # Downstream projects: Add any additional Pandoc HTML generation steps here.
+
+      - name: Generate Build Notes HTML with Pandoc
+        shell: bash
+        run: >
+          dotnet pandoc
+          --defaults docs/buildnotes/definition.yaml
+          --filter node_modules/.bin/mermaid-filter.cmd
+          --metadata version="${{ inputs.version }}"
+          --metadata date="$(date +'%Y-%m-%d')"
+          --output docs/buildnotes/buildnotes.html
+
+      - name: Generate Guide HTML with Pandoc
+        shell: bash
+        run: >
+          dotnet pandoc
+          --defaults docs/guide/definition.yaml
+          --filter node_modules/.bin/mermaid-filter.cmd
+          --metadata version="${{ inputs.version }}"
+          --metadata date="$(date +'%Y-%m-%d')"
+          --output docs/guide/guide.html
+
+      # === GENERATE PDF DOCUMENTS WITH WEASYPRINT ===
+      # This section converts HTML documents to PDF using Weasyprint.
+      # Downstream projects: Add any additional Weasyprint PDF generation steps here.
+
+      - name: Generate Build Notes PDF with Weasyprint
+        run: >
+          dotnet weasyprint
+          --pdf-variant pdf/a-3u
+          docs/buildnotes/buildnotes.html
+          "docs/SpdxWorkflows Build Notes.pdf"
+
+      - name: Generate Guide PDF with Weasyprint
+        run: >
+          dotnet weasyprint
+          --pdf-variant pdf/a-3u
+          docs/guide/guide.html
+          "docs/SpdxWorkflows User Guide.pdf"
+
+      # === UPLOAD ARTIFACTS ===
+      # This section uploads all generated documentation artifacts.
+      # Downstream projects: Add any additional artifact uploads here.
+
+      - name: Upload documentation
+        uses: actions/upload-artifact@v7
+        with:
+          name: documents
+          path: |
+            docs/*.pdf
+            docs/buildnotes.md

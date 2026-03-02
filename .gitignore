@@ -5,3 +5,16 @@
 bin/
 obj/
 TestResults/
+
+node_modules/
+package-lock.json
+
+# Generated documentation
+docs/**/*.pdf
+docs/buildnotes/buildnotes.html
+docs/guide/guide.html
+docs/buildnotes.md
+docs/buildnotes/versions.md
+
+# VersionMark captures (generated during CI/CD)
+versionmark-*.json
