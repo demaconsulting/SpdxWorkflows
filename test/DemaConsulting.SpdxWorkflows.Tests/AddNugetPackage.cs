@@ -4,7 +4,7 @@
 public class AddNugetPackage : AddPackageTest
 {
     [TestMethod, TestCategory("AnyOS")]
-    public void TestAddNugetPackage()
+    public void AddNugetPackage_WithValidParameters_AddsPackageToDocument()
     {
         var doc = RunAddPackageWorkflow(
             "AddNugetPackage.yaml",

@@ -4,7 +4,7 @@
 public class AddVsTestPackage : AddPackageTest
 {
     [TestMethod, TestCategory("AnyOS")]
-    public void TestAddVsTestPackage()
+    public void AddVsTestPackage_WithValidParameters_AddsPackageToDocument()
     {
         var doc = RunAddPackageWorkflow(
             "AddVsTestPackage.yaml",

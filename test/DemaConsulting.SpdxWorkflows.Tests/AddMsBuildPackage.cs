@@ -4,7 +4,7 @@
 public class AddMsBuildPackage : AddPackageTest
 {
     [TestMethod, TestCategory("AnyOS")]
-    public void TestAddMsBuildPackage()
+    public void AddMsBuildPackage_WithValidParameters_AddsPackageToDocument()
     {
         var doc = RunAddPackageWorkflow(
             "AddMsBuildPackage.yaml",
