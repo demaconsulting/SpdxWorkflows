@@ -76,6 +76,8 @@ jobs:
           --no-restore
           --verbosity normal
           --filter "TestCategory=AnyOS|TestCategory=Windows"
+          --logger "trx;LogFilePrefix=windows"
+          --results-directory test-results
 
       - name: Run Linux Tests
         if: startsWith(matrix.os, 'ubuntu')
@@ -85,6 +87,8 @@ jobs:
           --no-restore
           --verbosity normal
           --filter "TestCategory=AnyOS|TestCategory=Linux"
+          --logger "trx;LogFilePrefix=ubuntu"
+          --results-directory test-results
 
       - name: Create Dotnet Tool
         run: |
@@ -97,6 +101,12 @@ jobs:
           name: artifacts-${{ matrix.os }}
           path: |
             pack/*.nupkg
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-${{ matrix.os }}
+          path: test-results/*.trx
 
       - name: Capture tool versions
         shell: bash
@@ -135,6 +145,13 @@ jobs:
         with:
           path: version-captures
           pattern: 'version-capture-*'
+        continue-on-error: true
+
+      - name: Download all test results
+        uses: actions/download-artifact@v8
+        with:
+          path: test-results
+          pattern: 'test-results-*'
         continue-on-error: true
 
       # === INSTALL DEPENDENCIES ===
@@ -189,6 +206,16 @@ jobs:
           echo "=== Build Notes Report ==="
           cat docs/buildnotes.md
 
+      - name: Generate Requirements with ReqStream
+        shell: bash
+        run: >
+          dotnet reqstream
+          --requirements requirements.yaml
+          --tests "test-results/**/*.trx"
+          --report docs/requirements/requirements.md
+          --justifications docs/justifications/justifications.md
+          --matrix docs/tracematrix/tracematrix.md
+
       - name: Publish Tool Versions
         shell: bash
         run: |
@@ -227,6 +254,36 @@ jobs:
           --metadata date="$(date +'%Y-%m-%d')"
           --output docs/guide/guide.html
 
+      - name: Generate Requirements HTML with Pandoc
+        shell: bash
+        run: >
+          dotnet pandoc
+          --defaults docs/requirements/definition.yaml
+          --filter node_modules/.bin/mermaid-filter.cmd
+          --metadata version="${{ inputs.version }}"
+          --metadata date="$(date +'%Y-%m-%d')"
+          --output docs/requirements/requirements.html
+
+      - name: Generate Requirements Justifications HTML with Pandoc
+        shell: bash
+        run: >
+          dotnet pandoc
+          --defaults docs/justifications/definition.yaml
+          --filter node_modules/.bin/mermaid-filter.cmd
+          --metadata version="${{ inputs.version }}"
+          --metadata date="$(date +'%Y-%m-%d')"
+          --output docs/justifications/justifications.html
+
+      - name: Generate Trace Matrix HTML with Pandoc
+        shell: bash
+        run: >
+          dotnet pandoc
+          --defaults docs/tracematrix/definition.yaml
+          --filter node_modules/.bin/mermaid-filter.cmd
+          --metadata version="${{ inputs.version }}"
+          --metadata date="$(date +'%Y-%m-%d')"
+          --output docs/tracematrix/tracematrix.html
+
       # === GENERATE PDF DOCUMENTS WITH WEASYPRINT ===
       # This section converts HTML documents to PDF using Weasyprint.
       # Downstream projects: Add any additional Weasyprint PDF generation steps here.
@@ -244,6 +301,27 @@ jobs:
           --pdf-variant pdf/a-3u
           docs/guide/guide.html
           "docs/SpdxWorkflows User Guide.pdf"
+
+      - name: Generate Requirements PDF with Weasyprint
+        run: >
+          dotnet weasyprint
+          --pdf-variant pdf/a-3u
+          docs/requirements/requirements.html
+          "docs/SpdxWorkflows Requirements.pdf"
+
+      - name: Generate Requirements Justifications PDF with Weasyprint
+        run: >
+          dotnet weasyprint
+          --pdf-variant pdf/a-3u
+          docs/justifications/justifications.html
+          "docs/SpdxWorkflows Requirements Justifications.pdf"
+
+      - name: Generate Trace Matrix PDF with Weasyprint
+        run: >
+          dotnet weasyprint
+          --pdf-variant pdf/a-3u
+          docs/tracematrix/tracematrix.html
+          "docs/SpdxWorkflows Trace Matrix.pdf"
 
       # === UPLOAD ARTIFACTS ===
       # This section uploads all generated documentation artifacts.

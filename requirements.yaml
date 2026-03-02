@@ -1,0 +1,224 @@
+---
+# SpdxWorkflows Requirements
+#
+# This file defines the requirements for the SpdxWorkflows project.
+# Each requirement is linked to one or more test cases for traceability.
+#
+# Enforced in CI via:
+#   dotnet reqstream --requirements requirements.yaml
+#                    --tests "test-results/**/*.trx"
+#                    --enforce
+#
+# Requirement ID naming convention:
+#   SPWF-GET-NNN  - Get Version workflow requirements
+#   SPWF-ADD-NNN  - Add Package workflow requirements
+#   SPWF-ENH-NNN  - Enhance Package workflow requirements
+#
+# Test links can include a source filter prefix (e.g. "windows@", "ubuntu@") to
+# restrict which test results count as evidence for a requirement. This is critical
+# for platform-specific requirements - removing these filters invalidates the proof.
+#
+# Source filter prefixes:
+#   windows@TestName  - proves the test passed on a Windows platform
+#   ubuntu@TestName   - proves the test passed on a Linux (Ubuntu) platform
+#
+# NOTE: The GetIarEwArmVersion requirement (SPWF-GET-003) and the
+# EnhancePackageFromNugetSpdx workflow are commented out until test coverage is
+# available in CI.
+
+sections:
+
+  - title: Get Version Workflows
+    requirements:
+
+      - id: SPWF-GET-001
+        title: >-
+          The GetDotNetVersion workflow shall output the installed .NET SDK
+          version as a version string.
+        justification: |
+          Consumers of SpdxWorkflows need to capture .NET SDK version information
+          into SPDX documents to satisfy NTIA minimum elements and software supply
+          chain transparency requirements. The version output must be a parseable
+          version string matching the installed SDK.
+        tests:
+          - windows@GetDotNetVersion_OnAnyOS_ReturnsVersion
+          - ubuntu@GetDotNetVersion_OnAnyOS_ReturnsVersion
+
+      - id: SPWF-GET-002
+        title: >-
+          The GetGccVersion workflow shall output the installed GCC compiler
+          version as a version string.
+        justification: |
+          Consumers building firmware or embedded software with GCC need to capture
+          GCC version information into SPDX documents to satisfy NTIA minimum
+          elements and software supply chain transparency requirements.
+        tests:
+          - ubuntu@GetGccVersion_OnLinux_ReturnsVersion
+
+      # SPWF-GET-003 is commented out until test coverage is available.
+      # The GetIarEwArmVersion workflow requires IAR EW ARM to be installed in CI.
+      # Pending test: windows@GetIarEwArmVersion_OnWindows_ReturnsVersion
+      #
+      # - id: SPWF-GET-003
+      #   title: >-
+      #     The GetIarEwArmVersion workflow shall output the installed IAR Embedded
+      #     Workbench for ARM version as a version string.
+      #   justification: |
+      #     Consumers building embedded software with IAR EW ARM need to capture
+      #     version information into SPDX documents to satisfy NTIA minimum elements
+      #     and software supply chain transparency requirements.
+      #   tests:
+      #     - windows@GetIarEwArmVersion_OnWindows_ReturnsVersion
+
+      - id: SPWF-GET-004
+        title: >-
+          The GetMsBuildVersion workflow shall output the installed MSBuild
+          version as a version string.
+        justification: |
+          Consumers building .NET or Visual Studio solutions with MSBuild need to
+          capture MSBuild version information into SPDX documents to satisfy NTIA
+          minimum elements and software supply chain transparency requirements.
+        tests:
+          - windows@GetMsBuildVersion_OnWindows_ReturnsVersion
+
+      - id: SPWF-GET-005
+        title: >-
+          The GetNugetVersion workflow shall output the installed NuGet CLI
+          version as a version string.
+        justification: |
+          Consumers using NuGet to manage package dependencies need to capture
+          NuGet version information into SPDX documents to satisfy NTIA minimum
+          elements and software supply chain transparency requirements.
+        tests:
+          - windows@GetNugetVersion_OnWindows_ReturnsVersion
+
+      - id: SPWF-GET-006
+        title: >-
+          The GetNugetPackagePath workflow shall output the file system path to
+          the specified NuGet package in the local package cache.
+        justification: |
+          The EnhancePackageFromNugetSpdx workflow and consumers need to locate
+          NuGet packages on disk by name and version in order to read SPDX
+          documents embedded within those packages.
+        tests:
+          - windows@GetNugetPackagePath_WithPackageAndVersion_ReturnsPath
+
+      - id: SPWF-GET-007
+        title: >-
+          The GetVsTestVersion workflow shall output the installed Visual Studio
+          Test Platform (VSTest) version as a version string.
+        justification: |
+          Consumers using VSTest to run automated tests need to capture version
+          information into SPDX documents to satisfy NTIA minimum elements and
+          software supply chain transparency requirements.
+        tests:
+          - windows@GetVsTestVersion_OnWindows_ReturnsVersion
+
+  - title: Add Package Workflows
+    requirements:
+
+      - id: SPWF-ADD-001
+        title: >-
+          The AddDotNetPackage workflow shall add a .NET SDK package entry to the
+          specified SPDX document with accurate metadata including name, version,
+          license, copyright, supplier, originator, and homepage.
+        justification: |
+          SPDX documents require accurate, consistent package metadata to satisfy
+          NTIA minimum elements and software supply chain transparency standards.
+          The .NET SDK metadata is fixed and well-known, sourced from Microsoft's
+          published information and the dotnet/dotnet GitHub repository.
+        tests:
+          - windows@AddDotNetPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddDotNetPackage_WithValidParameters_AddsPackageToDocument
+
+      - id: SPWF-ADD-002
+        title: >-
+          The AddGccPackage workflow shall add a GNU Compiler Collection package
+          entry to the specified SPDX document with accurate metadata including
+          name, version, license, copyright, originator, homepage, and PURL.
+        justification: |
+          SPDX documents require accurate, consistent package metadata to satisfy
+          NTIA minimum elements and software supply chain transparency standards.
+          GCC metadata is publicly available from the GNU project and the
+          gcc-mirror/gcc GitHub repository.
+        tests:
+          - windows@AddGccPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddGccPackage_WithValidParameters_AddsPackageToDocument
+
+      - id: SPWF-ADD-003
+        title: >-
+          The AddIarEwArmPackage workflow shall add an IAR Embedded Workbench for
+          ARM package entry to the specified SPDX document with accurate metadata
+          including name, version, supplier, originator, and homepage.
+        justification: |
+          SPDX documents require accurate, consistent package metadata to satisfy
+          NTIA minimum elements and software supply chain transparency standards.
+          IAR EW ARM metadata is sourced from IAR Systems' published product
+          information.
+        tests:
+          - windows@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
+
+      - id: SPWF-ADD-004
+        title: >-
+          The AddMsBuildPackage workflow shall add a Microsoft Build Engine package
+          entry to the specified SPDX document with accurate metadata including
+          name, version, license, copyright, supplier, originator, homepage,
+          and PURL.
+        justification: |
+          SPDX documents require accurate, consistent package metadata to satisfy
+          NTIA minimum elements and software supply chain transparency standards.
+          MSBuild metadata is publicly available from Microsoft's documentation and
+          the dotnet/msbuild GitHub repository.
+        tests:
+          - windows@AddMsBuildPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddMsBuildPackage_WithValidParameters_AddsPackageToDocument
+
+      - id: SPWF-ADD-005
+        title: >-
+          The AddNugetPackage workflow shall add a NuGet CLI package entry to the
+          specified SPDX document with accurate metadata including name, version,
+          license, copyright, supplier, originator, homepage, and PURL.
+        justification: |
+          SPDX documents require accurate, consistent package metadata to satisfy
+          NTIA minimum elements and software supply chain transparency standards.
+          NuGet CLI metadata is publicly available from nuget.org and the
+          NuGet/NuGet.Client GitHub repository.
+        tests:
+          - windows@AddNugetPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddNugetPackage_WithValidParameters_AddsPackageToDocument
+
+      - id: SPWF-ADD-006
+        title: >-
+          The AddVsTestPackage workflow shall add a Visual Studio Test Platform
+          package entry to the specified SPDX document with accurate metadata
+          including name, version, license, copyright, supplier, originator,
+          homepage, and PURL.
+        justification: |
+          SPDX documents require accurate, consistent package metadata to satisfy
+          NTIA minimum elements and software supply chain transparency standards.
+          VSTest metadata is publicly available from Microsoft's documentation and
+          the microsoft/vstest GitHub repository.
+        tests:
+          - windows@AddVsTestPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddVsTestPackage_WithValidParameters_AddsPackageToDocument
+
+# The Enhance Package Workflows section is commented out until test coverage is
+# available. The EnhancePackageFromNugetSpdx workflow requires a NuGet package
+# with an embedded SPDX document in the local cache which is not available in CI.
+#
+#  - title: Enhance Package Workflows
+#    requirements:
+#
+#      - id: SPWF-ENH-001
+#        title: >-
+#          The EnhancePackageFromNugetSpdx workflow shall update an existing
+#          package entry in an SPDX document with enriched metadata copied from
+#          the SPDX document embedded in the corresponding NuGet package.
+#        justification: |
+#          NuGet packages often include embedded SPDX documents with comprehensive
+#          metadata such as license texts, checksums, and CPE identifiers that
+#          exceed what is manually catalogued. Enhancing packages from this embedded
+#          source improves SPDX document accuracy and completeness without
+#          requiring manual data entry.
+#        # Pending test: EnhancePackageFromNugetSpdx_WithValidPackage_EnhancesDocument

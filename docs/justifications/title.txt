@@ -1,0 +1,13 @@
+---
+title: SpdxWorkflows Requirements Justifications
+subtitle: Requirements Justifications for SpdxWorkflows
+author: DEMA Consulting
+description: Requirements Justifications for the SpdxWorkflows project
+lang: en-US
+keywords:
+  - SpdxWorkflows
+  - Requirements
+  - Justifications
+  - SPDX
+  - Workflows
+---

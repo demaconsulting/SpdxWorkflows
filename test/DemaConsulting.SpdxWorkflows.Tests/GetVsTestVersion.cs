@@ -6,7 +6,7 @@ namespace DemaConsulting.SpdxWorkflows.Tests;
 public partial class GetVsTestVersion : WorkflowTest
 {
     [TestMethod, TestCategory("Windows")]
-    public void TestGetVsTestVersion()
+    public void GetVsTestVersion_OnWindows_ReturnsVersion()
     {
         // Use vswhere to find VSTest
         Runner.Run(

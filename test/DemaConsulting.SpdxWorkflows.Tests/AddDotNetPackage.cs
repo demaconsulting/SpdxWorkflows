@@ -4,7 +4,7 @@
 public class AddDotNetPackage : AddPackageTest
 {
     [TestMethod, TestCategory("AnyOS")]
-    public void TestAddDotNetPackage()
+    public void AddDotNetPackage_WithValidParameters_AddsPackageToDocument()
     {
         var doc = RunAddPackageWorkflow(
             "AddDotNetPackage.yaml",

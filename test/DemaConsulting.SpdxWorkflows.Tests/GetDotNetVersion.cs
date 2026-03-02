@@ -6,7 +6,7 @@ namespace DemaConsulting.SpdxWorkflows.Tests;
 public partial class GetDotNetVersion : WorkflowTest
 {
     [TestMethod, TestCategory("AnyOS")]
-    public void TestGetDotNetVersion()
+    public void GetDotNetVersion_OnAnyOS_ReturnsVersion()
     {
         // Run the workflow
         var exitCode = RunWorkflow(

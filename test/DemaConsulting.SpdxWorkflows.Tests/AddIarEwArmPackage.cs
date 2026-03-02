@@ -4,7 +4,7 @@
 public class AddIarEwArmPackage : AddPackageTest
 {
     [TestMethod, TestCategory("AnyOS")]
-    public void TestAddIarEwArmPackage()
+    public void AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument()
     {
         var doc = RunAddPackageWorkflow(
             "AddIarEwArmPackage.yaml",

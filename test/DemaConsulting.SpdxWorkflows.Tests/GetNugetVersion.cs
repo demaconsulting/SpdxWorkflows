@@ -6,7 +6,7 @@ namespace DemaConsulting.SpdxWorkflows.Tests;
 public partial class GetNugetVersion : WorkflowTest
 {
     [TestMethod, TestCategory("Windows")]
-    public void TestGetNugetVersion()
+    public void GetNugetVersion_OnWindows_ReturnsVersion()
     {
         // Run the workflow
         var exitCode = RunWorkflow(

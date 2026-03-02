@@ -4,7 +4,7 @@
 public class AddGccPackage : AddPackageTest
 {
     [TestMethod, TestCategory("AnyOS")]
-    public void TestAddGccPackage()
+    public void AddGccPackage_WithValidParameters_AddsPackageToDocument()
     {
         var doc = RunAddPackageWorkflow(
             "AddGccPackage.yaml",

@@ -6,7 +6,7 @@ namespace DemaConsulting.SpdxWorkflows.Tests;
 public partial class GetNugetPackagePath : WorkflowTest
 {
     [TestMethod, TestCategory("Windows")]
-    public void TestGetNugetPackagePath()
+    public void GetNugetPackagePath_WithPackageAndVersion_ReturnsPath()
     {
         // Run the workflow
         var exitCode = RunWorkflow(

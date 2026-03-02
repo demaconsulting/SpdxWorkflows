@@ -6,7 +6,7 @@ namespace DemaConsulting.SpdxWorkflows.Tests;
 public partial class GetGccVersion : WorkflowTest
 {
     [TestMethod, TestCategory("Linux")]
-    public void TestGetGccVersion()
+    public void GetGccVersion_OnLinux_ReturnsVersion()
     {
         // Run the workflow
         var exitCode = RunWorkflow(
