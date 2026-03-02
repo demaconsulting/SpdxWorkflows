@@ -17,7 +17,7 @@
 #   windows@TestName  - proves the test passed on a Windows platform
 #   ubuntu@TestName   - proves the test passed on a Linux (Ubuntu) platform
 #
-# NOTE: Requirements for IAR EW ARM workflows (REQ-GIV-001, REQ-AIP-001) and the
+# NOTE: The GetIarEwArmVersion requirement (REQ-GIV-001) and the
 # EnhancePackageFromNugetSpdx workflow are commented out until test coverage is
 # available in CI.
 
@@ -140,24 +140,19 @@ sections:
           - windows@AddGccPackage_WithValidParameters_AddsPackageToDocument
           - ubuntu@AddGccPackage_WithValidParameters_AddsPackageToDocument
 
-      # REQ-AIP-001 is commented out until test coverage is available.
-      # The AddIarEwArmPackage test requires IAR EW ARM to be installed in CI.
-      # Pending tests: windows@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
-      #                ubuntu@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
-      #
-      # - id: REQ-AIP-001
-      #   title: >-
-      #     The AddIarEwArmPackage workflow shall add an IAR Embedded Workbench for
-      #     ARM package entry to the specified SPDX document with accurate metadata
-      #     including name, version, supplier, originator, and homepage.
-      #   justification: |
-      #     SPDX documents require accurate, consistent package metadata to satisfy
-      #     NTIA minimum elements and software supply chain transparency standards.
-      #     IAR EW ARM metadata is sourced from IAR Systems' published product
-      #     information.
-      #   tests:
-      #     - windows@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
-      #     - ubuntu@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
+      - id: REQ-AIP-001
+        title: >-
+          The AddIarEwArmPackage workflow shall add an IAR Embedded Workbench for
+          ARM package entry to the specified SPDX document with accurate metadata
+          including name, version, supplier, originator, and homepage.
+        justification: |
+          SPDX documents require accurate, consistent package metadata to satisfy
+          NTIA minimum elements and software supply chain transparency standards.
+          IAR EW ARM metadata is sourced from IAR Systems' published product
+          information.
+        tests:
+          - windows@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
+          - ubuntu@AddIarEwArmPackage_WithValidParameters_AddsPackageToDocument
 
       - id: REQ-AMP-001
         title: >-
