@@ -23,7 +23,7 @@ jobs:
           globs: '**/*.md'
 
       - name: Run spell checker
-        uses: streetsidesoftware/cspell-action@v8
+        uses: streetsidesoftware/cspell-action@v9
         with:
           files: '**/*.{cs,md,json,yaml,yml}'
           incremental_files_only: false
