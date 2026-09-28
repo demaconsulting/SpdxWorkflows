@@ -33,6 +33,7 @@
     "LINQ",
     "libgcj",
     "libstdc",
+    "llvmorg",
     "maintainer",
     "markdownlint",
     "mermaid",

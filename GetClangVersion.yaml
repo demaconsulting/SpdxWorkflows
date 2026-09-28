@@ -1,0 +1,27 @@
+# GetClangVersion
+#
+# This SpdxTool workflow file gets the version of the clang compiler. By
+# default this runs 'clang' from the system path, but the 'path' parameter
+# can be set to the full path of a vendor distribution binary (e.g. the Arm
+# Toolchain for Embedded 'clang' executable).
+#
+# Parameters:
+#   path:       # Clang program name or full path (default 'clang')
+#
+# Outputs:
+# - version     # Version of the clang compiler
+
+parameters:
+  path: 'clang'
+
+
+steps:
+
+  # Query the version of clang
+  - command: query
+    inputs:
+      output: version
+      pattern: 'clang version (?<value>\S+)'
+      program: '${{ path }}'
+      arguments:
+        - '--version'

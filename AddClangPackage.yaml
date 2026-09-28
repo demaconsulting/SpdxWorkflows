@@ -1,0 +1,42 @@
+# AddClangPackage
+#
+# This SpdxTool workflow file adds a Clang/LLVM package entry to an SPDX
+# document. The Clang/LLVM package information was attained from:
+# - https://clang.llvm.org/
+# - https://github.com/llvm/llvm-project/blob/main/LICENSE.TXT
+#
+# Parameters:
+# - spdx        # SPDX document file name
+# - id          # Clang Package ID
+# - version     # Clang Package version
+#
+# Outputs:
+#   none
+
+parameters:
+  spdx: ''
+  version: ''
+  id: 'SPDXRef-Package-Clang'
+
+
+steps:
+
+  # Add the Clang package
+  - command: add-package
+    inputs:
+      spdx: ${{ spdx }}
+      package:
+        id: ${{ id }}
+        name: Clang
+        download: NOASSERTION
+        license: 'Apache-2.0 WITH LLVM-exception'
+        copyright: 'Copyright (c) LLVM Project contributors'
+        version: ${{ version }}
+        supplier: 'Organization: LLVM Project'
+        originator: 'Organization: LLVM Project'
+        homepage: https://clang.llvm.org/
+        summary: >-
+          Clang is a C, C++, Objective-C, and Objective-C++ compiler front end built on the
+          LLVM compiler infrastructure, commonly used for cross-compiling embedded targets.
+        purl: pkg:github/llvm/llvm-project@llvmorg-${{ version }}
+      relationships: []
