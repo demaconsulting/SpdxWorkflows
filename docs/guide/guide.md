@@ -59,6 +59,21 @@ Retrieves the version of the installed GCC compiler.
 
 - `version`: The GCC version string
 
+### GetClangVersion
+
+Retrieves the version of the installed Clang compiler. By default this runs
+`clang` from the system path; set the `path` parameter to the full path of a
+vendor distribution binary (e.g. Arm Toolchain for Embedded) to use a
+different Clang install.
+
+**Parameters:**
+
+- `path`: Clang program name or full path (default `clang`)
+
+**Outputs:**
+
+- `version`: The Clang version string
+
 ### GetIarEwArmVersion
 
 Retrieves the version of the installed IAR Embedded Workbench for ARM.
@@ -107,6 +122,16 @@ Adds a GCC compiler package to an SPDX document.
 **Parameters:**
 
 - `spdx`: Path to the SPDX document
+
+### AddClangPackage
+
+Adds a Clang compiler package to an SPDX document.
+
+**Parameters:**
+
+- `spdx`: Path to the SPDX document
+- `id`: Clang package SPDX ID (default `SPDXRef-Package-Clang`)
+- `version`: Clang package version
 
 ### AddIarEwArmPackage
 

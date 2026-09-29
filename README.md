@@ -15,9 +15,9 @@ materials (SBOMs).
 This collection provides:
 
 - **Version Discovery Workflows**: Detect and capture the installed versions of common build
-  tools — .NET SDK, GCC, MSBuild, NuGet, VSTest, and IAR EW ARM
-- **SPDX Package Workflows**: Add build-tool packages to an SPDX document — .NET SDK, GCC,
-  MSBuild, NuGet, VSTest, and IAR EW ARM
+  tools — .NET SDK, Clang, GCC, MSBuild, NuGet, VSTest, and IAR EW ARM
+- **SPDX Package Workflows**: Add build-tool packages to an SPDX document — .NET SDK, Clang,
+  GCC, MSBuild, NuGet, VSTest, and IAR EW ARM
 - **NuGet SPDX Enhancement**: Enrich an SPDX document package with metadata sourced from a
   NuGet package's own SPDX document
 - **Multi-Platform Support**: Workflows target Windows and Linux build environments
@@ -64,6 +64,7 @@ discovery workflows produce a single `version` output parameter.
 | Workflow | Description | Platform |
 | --- | --- | --- |
 | [GetDotNetVersion.yaml][link-wf-getdotnet] | Gets the installed .NET SDK version | Windows, Linux |
+| [GetClangVersion.yaml][link-wf-getclang] | Gets the installed Clang version | Windows, Linux |
 | [GetGccVersion.yaml][link-wf-getgcc] | Gets the installed GCC version | Linux |
 | [GetIarEwArmVersion.yaml][link-wf-getiar] | Gets the installed IAR EW ARM version | Windows |
 | [GetMsBuildVersion.yaml][link-wf-getmsbuild] | Gets the installed MSBuild version | Windows |
@@ -78,6 +79,7 @@ These workflows add a build-tool entry as a package to an existing SPDX document
 | Workflow | Description | Platform |
 | --- | --- | --- |
 | [AddDotNetPackage.yaml][link-wf-adddotnet] | Adds the .NET SDK package to an SPDX document | Windows, Linux |
+| [AddClangPackage.yaml][link-wf-addclang] | Adds the Clang package to an SPDX document | Windows, Linux |
 | [AddGccPackage.yaml][link-wf-addgcc] | Adds the GCC package to an SPDX document | Linux |
 | [AddIarEwArmPackage.yaml][link-wf-addiar] | Adds the IAR EW ARM package to an SPDX document | Windows |
 | [AddMsBuildPackage.yaml][link-wf-addmsbuild] | Adds the MSBuild package to an SPDX document | Windows |
@@ -119,6 +121,7 @@ MIT License.
 
 <!-- Workflow file references -->
 [link-wf-getdotnet]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/GetDotNetVersion.yaml
+[link-wf-getclang]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/GetClangVersion.yaml
 [link-wf-getgcc]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/GetGccVersion.yaml
 [link-wf-getiar]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/GetIarEwArmVersion.yaml
 [link-wf-getmsbuild]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/GetMsBuildVersion.yaml
@@ -126,6 +129,7 @@ MIT License.
 [link-wf-getnugetpath]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/GetNugetPackagePath.yaml
 [link-wf-getvstest]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/GetVsTestVersion.yaml
 [link-wf-adddotnet]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/AddDotNetPackage.yaml
+[link-wf-addclang]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/AddClangPackage.yaml
 [link-wf-addgcc]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/AddGccPackage.yaml
 [link-wf-addiar]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/AddIarEwArmPackage.yaml
 [link-wf-addmsbuild]: https://github.com/demaconsulting/SpdxWorkflows/blob/main/AddMsBuildPackage.yaml

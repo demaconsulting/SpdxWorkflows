@@ -55,6 +55,19 @@ sections:
         tests:
           - ubuntu@GetGccVersion_OnLinux_ReturnsVersion
 
+      - id: SPWF-GET-008
+        title: >-
+          The GetClangVersion workflow shall output the installed Clang
+          compiler version as a version string.
+        justification: |
+          Consumers cross-compiling embedded firmware with Clang/LLVM distributions
+          (e.g. Arm Toolchain for Embedded) need to capture Clang version
+          information into SPDX documents to satisfy NTIA minimum elements and
+          software supply chain transparency requirements.
+        tests:
+          - windows@GetClangVersion_OnAnyOS_ReturnsVersion
+          - ubuntu@GetClangVersion_OnAnyOS_ReturnsVersion
+
       # SPWF-GET-003 is commented out until test coverage is available.
       # The GetIarEwArmVersion workflow requires IAR EW ARM to be installed in CI.
       # Pending test: windows@GetIarEwArmVersion_OnWindows_ReturnsVersion
