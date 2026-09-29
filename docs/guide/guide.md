@@ -130,6 +130,8 @@ Adds a Clang compiler package to an SPDX document.
 **Parameters:**
 
 - `spdx`: Path to the SPDX document
+- `id`: Clang package SPDX ID (default `SPDXRef-Package-Clang`)
+- `version`: Clang package version
 
 ### AddIarEwArmPackage
 
