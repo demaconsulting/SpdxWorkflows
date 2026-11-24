@@ -18,3 +18,6 @@ docs/buildnotes/versions.md
 
 # VersionMark captures (generated during CI/CD)
 versionmark-*.json
+
+# Agent working logs (transient, never committed)
+.agent-logs/
